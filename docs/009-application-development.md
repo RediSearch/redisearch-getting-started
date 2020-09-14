@@ -1,0 +1,66 @@
+# Application Development
+
+It is time now to see how to use RediSearch in your application.
+
+You can find the same REST Service that uses RediSearch developed with different programming languages.
+
+* [RediSearch & Java : Jedis/JRediSearch](../../../tree/master/sample-app/redisearch-jedis-rest)
+
+* [Node.js : Node RediSearch](../../../tree/master/sample-app/redisearch-node-rest)
+
+* [Python : Python RediSearch](../../../tree/master/sample-app/redisearch-python-rest)
+
+The frontend is created using a Vue.js application that let you run search queries using each of the REST backend.
+
+![Application Architecture](https://github.com/Redis-Developer/getting-started-redisearch/blob/master/docs/images/sample-app-archi.png)
+
+
+## Run the Sample Application
+
+The application and all the services, including RediSearch, are available as a Docker Compose application.
+
+
+If you have not already downloaded the project, clone it:
+
+```
+> git clone https://github.com/redis-developer/getting-started-redisearch.git
+
+> cd getting-started-redisearch
+```
+
+
+To run the application:
+
+```
+> cd sample-app
+
+> docker-compose up --force-recreate --build
+
+```
+
+This Docker Compose will start:
+
+1. RediSearch instance on port 6380, and import all movies, actors and create indexes
+1. The Java, Node and Python REST Services available on port 8085, 8086, 8087
+1. The frontend on port 8084
+
+Once started you can access the application and its services using the following URLs:
+
+* http://localhost:8084
+* http://localhost:8085/api/1.0/search?q=star&offset=0&limit=10
+* http://localhost:8086/api/1.0/search?q=star&offset=0&limit=10
+* http://localhost:8087/api/1.0/search?q=star&offset=0&limit=10
+
+
+
+#### Stop and Delete Everything
+
+Run the following command to delete the containers & images:
+
+```
+> docker-compose down -v --rmi local --remove-orphans
+```
+
+
+---
+Next: [Sample Application](008-application-development.md)

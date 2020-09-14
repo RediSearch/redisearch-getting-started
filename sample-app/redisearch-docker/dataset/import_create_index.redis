@@ -1,0 +1,4 @@
+
+FT.CREATE idx:movie ON hash PREFIX 1 "movie:" SCHEMA title TEXT SORTABLE plot TEXT release_year NUMERIC SORTABLE rating NUMERIC SORTABLE genre TAG SORTABLE
+
+FT.CREATE idx:actor ON hash PREFIX 1 "actor:" SCHEMA first_name TEXT SORTABLE last_name TEXT SORTABLE date_of_birth NUMERIC SORTABLE

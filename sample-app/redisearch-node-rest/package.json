@@ -1,0 +1,30 @@
+{
+  "name": "redisearch-node-rest",
+  "version": "1.0.0",
+  "description": "Sample RediSearch REST Server with Node.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Redis-Developer/getting-started-redisearch.git"
+  },
+  "keywords": [
+    "redis",
+    "redisearch",
+    "node"
+  ],
+  "author": "Tugdual Grall",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Redis-Developer/getting-started-redisearch/issues"
+  },
+  "homepage": "https://github.com/Redis-Developer/getting-started-redisearch#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "redis": "^3.0.2",
+    "redis-redisearch": "^1.0.1"
+  }
+}
