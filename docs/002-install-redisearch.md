@@ -15,7 +15,7 @@ Let's use Docker for now.
 ```
 > docker run -it --rm --name redis-search-2 \
    -p 6379:6379 \
-   redislabs/redisearch:1.99.3
+   redislabs/redisearch:2.0.0
 ```
 
 *Note: The container will automatically be removed when it exits (`--rm` parameter).*
