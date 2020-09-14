@@ -1,6 +1,6 @@
 # Getting Started with RediSearch 2.0
 
-<img src="https://github.com/Redis-Developer/getting-started-redisearch/blob/master/docs/images/logo.svg" width="200">
+<img src="https://raw.githubusercontent.com/RediSearch/redisearch-getting-started/master/docs/images/logo.svg" width="200">
 
 
 [RediSearch](https://redisearch.io) is a real-time indexing and search engine.
