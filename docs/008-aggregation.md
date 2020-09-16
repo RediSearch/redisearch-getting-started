@@ -62,6 +62,41 @@ Let's now take some examples.
 ---
 </details>
 
+<details> 
+  <summary>
+  <i><b>
+  Number of movies by genre, with the total number of votes, and average rating
+  </b></i>
+  </summary>
+
+```
+> FT.AGGREGATE idx:movie "*" GROUPBY 1 @genre REDUCE COUNT 0 AS nb_of_movies REDUCE SUM 1 votes AS nb_of_votes REDUCE AVG 1 rating AS avg_rating SORTBY 4 @avg_rating DESC @nb_of_votes DESC
+
+
+ 1) (integer) 26
+ 2) 1) "genre"
+    2) "fantasy"
+    3) "nb_of_movies"
+    4) "1"
+    5) "nb_of_votes"
+    6) "1500090"
+    7) "avg_rating"
+    8) "8.8"
+...
+11) 1) "genre"
+    2) "romance"
+    3) "nb_of_movies"
+    4) "2"
+    5) "nb_of_votes"
+    6) "746"
+    7) "avg_rating"
+    8) "6.65"
+```
+
+
+
+---
+</details>
 
 ----
 Next: [Advanced Options](009-advanced-features.md)

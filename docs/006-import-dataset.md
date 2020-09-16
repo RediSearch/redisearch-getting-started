@@ -1,6 +1,10 @@
 # Sample Dataset
 
-In the previous steps you used only few movies, let's now import more movies and some theaters (to discover the geospatial capabilities)
+In the previous steps you used only few movies, let's now import:
+
+* More movies *to discover more queries*.
+* Theaters *to discover the geospatial capabilities*.
+* Users *to do some aggregations*.
 
 ## Dataset Description
 
@@ -154,7 +158,110 @@ The theater hashes contain the following fields.
   </table>
 </details>
 
-## Importing the Movies & Theaters
+
+**Users**
+
+The file `sample-app/redisearch-docker/dataset/import_users.redis` is a script that create 5996 Hashes.
+
+The user hashes contain the following fields.
+
+* **`user:id`** : The unique ID of the user.
+* **`first_name`** : The first name of the user.
+* **`last_name`** : The last name of the user.
+* **`email`** : The email the user.
+* **`gender`** : The gender the user (`female`/`male`).
+* **`country`** : The country name the user.
+* **`country_code`** : The country code the user.
+* **`city`** : The city the user.
+* **`longitude`** : The longitude the user.
+* **`latitude`** : The latitude the user.
+* **`last_login`** : The last login the user, as EPOC time.
+* **`ip_address`** : The IP address of the user.
+
+<details> 
+ <summary>Sample Data: <b>user:3233</b></summary>
+  <table>
+      <thead>
+        <tr>
+            <th>Field</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+  <tbody>
+    <tr>
+        <th>first_name</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        Rosetta
+        </td>
+    </tr>
+    <tr>
+        <th>last_name</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        Olyff
+        </td>
+    </tr>
+    <tr>
+        <th>email</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        rolyff6g@163.com
+        </td>
+    </tr>
+    <tr>
+        <th>gender</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        female
+        </td>
+    </tr>
+    <tr>
+        <th>country</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        China
+        </td>
+    </tr>
+    <tr>
+        <th>country_code</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        CN
+        </td>
+    </tr>
+    <tr>
+        <th>city</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        Huangdao
+        </td>
+    </tr>
+    <tr>
+        <th>longitude</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        120.04619
+        </td>
+    </tr>
+    <tr>
+        <th>latitude</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        35.872664
+        </td>
+    </tr>
+    <tr>
+        <th>last_login</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        1570386621
+        </td>
+    </tr>
+    <tr>
+        <th>ip_address</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        218.47.90.79
+        </td>
+    </tr>
+    <tbody>
+  </table>
+</details>
+
+
+---
+
+## Importing the Movies, Theaters and Users
 
 Before importing the data, flush the database:
 
@@ -169,6 +276,9 @@ The easiest way to import the file is to use the `redis-cli`, using the followin
 $ redis-cli -h localhost -p 6379 < ./sample-app/redisearch-docker/dataset/import_movies.redis
 
 $ redis-cli -h localhost -p 6379 < ./sample-app/redisearch-docker/dataset/import_theaters.redis
+
+
+$ redis-cli -h localhost -p 6379 < ./sample-app/redisearch-docker/dataset/import_users.redis
 
 ```
 
@@ -186,11 +296,18 @@ Using Redis Insight or the redis-cli you can look at the dataset:
 >  HMGET "theater:20" name location
 1) "Broadway Theatre"
 2) "-73.98335054631019,40.763270202723625"
+
+
+
+> HMGET "user:343" first_name last_name last_login
+1) "Umeko"
+2) "Castagno"
+3) "1574769122"
+
 ```
 
 You can also use the `DBSIZE` command to see how many keys you have in your database.
 
-The script create 922 movies and 117 theathers, and not the RediSearch index, this will be done in the next step.
 
 ---
 Next: [Querying the movie database](007-query-movies.md)

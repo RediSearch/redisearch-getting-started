@@ -85,7 +85,7 @@ This is where RediSearch module is helping, and why it as been created.
 
 RediSearch simplifies a lot this by offering a simple and automatic way to create secondary indices on Redis Hashes. (more datastructure will eventually come)
 
-![Secondary Index](https://raw.githubusercontent.com/RediSearch/redisearch-getting-started/blob/master/docs/images/secondary-index.png)
+![Secondary Index](https://github.com/RediSearch/redisearch-getting-started/blob/master/docs/images/secondary-index.png?raw=true)
 
 Using RediSearch if you want to query on a field, you must index the fields. Let's start by indexing the following fields in of our movies:
 
