@@ -156,7 +156,7 @@ The theater hashes contain the following fields.
 
 ## Importing the Movies & Theaters
 
-Before importing the data, you can start by flushing your project database:
+Before importing the data, flush the database:
 
 ```
 > FLUSHALL

@@ -4,10 +4,10 @@ The database contains few movies, and an index, it is not possible to execute so
 
 ## Queries
 
-**Example : *All the movies that contains the string "`star`"***
+**Example : *All the movies that contains the string "`war`"***
 
 ```
-> FT.SEARCH idx:movie "star"
+> FT.SEARCH idx:movie "war"
 
 1) (integer) 2
 2) "movie:11005"
@@ -26,14 +26,14 @@ The database contains few movies, and an index, it is not possible to execute so
 
 The FT.SEARCH commands returns the list of result starting with the number of results, then the list of elements (keys & fields).
 
-This example uses a simple query string `"star"`, this will return all the movies that *contain* the word star in a text field of the index.
+As you can see the movie *Star Wars: Episode V - The Empire Strikes Back* is found, even though you used only the word “war” to match “Wars” in the title. This is because the title has been indexed as text, so the field is [tokenized](https://oss.redislabs.com/redisearch/Escaping/) and [stemmed](https://oss.redislabs.com/redisearch/Stemming/).
 
 Later when looking in more details on the query syntax you will learn more the search capabilities.
 
 It is also possible to limit the list of fields returned by the query using the `RETURN` parameter, let's run the same query, and return only the title and release_year:
 
 ```
-> FT.SEARCH idx:movie "star" RETURN 2 title release_year
+> FT.SEARCH idx:movie "war" RETURN 2 title release_year
 
 1) (integer) 2
 2) "movie:11005"
@@ -53,17 +53,16 @@ This query does not specific any "field" and still return some movie, this is be
 If you need to do a query on a specific field you can specify it using the `@field:` syntax, for example:
 
 ```
-> FT.SEARCH idx:movie "@title:star" RETURN 2 title release_year
+> FT.SEARCH idx:movie "@title:war" RETURN 2 title release_year
 ```
 
-
 ---
-**Example : *All the movies that contains the string "`star` but NOT the `jedi` one"***
+**Example : *All the movies that contains the string "`war` but NOT the `jedi` one"***
 
 Adding the string `-jedi` (minus) will ask the query engine to not return the values that contain `jedi`.
 
 ```
-> FT.SEARCH idx:movie "star -jedi" RETURN 2 title release_year
+> FT.SEARCH idx:movie "war -jedi" RETURN 2 title release_year
 
 1) (integer) 1
 2) "movie:11002"
@@ -73,6 +72,21 @@ Adding the string `-jedi` (minus) will ask the query engine to not return the va
    4) "1980"
 ```
 
+---
+**Example : *All the movies that contains the string "`gdfather` using fuzzy search"***
+
+As you can see the word godfather is wrongly spelled, it is possible using a [fuzzy matching](https://oss.redislabs.com/redisearch/Query_Syntax/#fuzzy_matching). Fuzzy matches are performed based on [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) (LD).
+
+```
+> FT.SEARCH idx:movie " %gdfather% " RETURN 2 title release_year
+
+1) (integer) 1
+2) "movie:11003"
+3) 1) "title"
+   2) "The Godfather"
+   3) "release_year"
+   4) "1972"
+```
 
 ---
 **Example  : *All `Thriller` movies"***
@@ -92,7 +106,6 @@ The syntax to query a TAG field is  @field_name:{value}
    4) "1995"
 
 ```
-
 
 ---
 **Example : *All `Thriller` or `Action` movies"***
@@ -153,7 +166,9 @@ or
 
 ```
 > FT.SEARCH idx:movie * FILTER release_year 1970 1980 RETURN 2 title release_year
+```
 
+```
 > FT.SEARCH idx:movie "@release_year:[1970 1980]" RETURN 2 title release_year
 
 1) (integer) 2
@@ -176,7 +191,6 @@ To exclude a value prepend it with `(` in the FILTER or query string, for exampl
 > FT.SEARCH idx:movie "@release_year:[1970 (1980]" RETURN 2 title release_year
 ```
 
-
 ---
 ## Insert, Update, Delete and Expire Documents
 
@@ -188,25 +202,25 @@ As part of this tutorial you have:
 
 When creating the index, using  the `idx:movie ON hash PREFIX 1 "movie:"` parameter you are asking the indexing engine to look at all existing keys and index them.
 
-Also any new information that match this pattern/type, will be indexed.
+Also new information that match this pattern/type, will be indexed.
 
-Let's count the number of movie and then add a new one, and count again:
+Let's count the number of movies, add a new one, and count again:
 
 ```
 > FT.SEARCH idx:movie "*" LIMIT 0 0
+
 1) (integer) 4
 
 
 > HSET movie:11033 title "Tomorrow Never Dies" plot "James Bond sets out to stop a media mogul's plan to induce war between China and the U.K in order to obtain exclusive global media coverage." release_year 1997 genre "Action" rating 6.5 votes 177732 imdb_id tt0120347
 
 > FT.SEARCH idx:movie "*" LIMIT 0 0
+
 1) (integer) 5
 
 ```
 
-The new movie has been indexed.
-
-You can also search on any of the indexed fields:
+The new movie has been indexed. You can also search on any of the indexed fields:
 
 ```
 > FT.SEARCH idx:movie "never" RETURN 2 title release_year
@@ -219,7 +233,7 @@ You can also search on any of the indexed fields:
    4) "1997"
 ```
 
-Let **update** one of the field, and search for `007`
+Now you **update** one of the field, and search for `007`
 
 ```
 > HSET movie:11033 title "Tomorrow Never Dies - 007"
@@ -235,7 +249,7 @@ Let **update** one of the field, and search for `007`
    4) "1997"
 ```
 
-When you *delete* the has the index is also updated, and the same happends when you are using expiration (TTL-Time To Live). 
+When you *delete* the hash, the index is also updated, and the same happens the the key is expired (TTL-Time To Live). 
 
 For example put a 20 sedonds expiration time to the James Bond movie:
 
@@ -253,7 +267,7 @@ You can run the following query, and you will see after 20 seconds the document 
 
 ```
 
-> Note: When you are using Redis as your primary database you are not necessary using the TTL to delet record. However, if the data your are storing and indexing are transient, for example a caching layer at the top of another datastore or Web service, query user sessions content, ... This is often qualified as a "Ephemeral Search" use case: lighweight, fast and expiration.
+> Note: When you are using Redis as your primary database you are not necessary using the TTL to delet record. However, if the data your are storing and indexing are transient, for example a caching layer at the top of another datastore or Web service, query user sessions content, ... This is often qualified as a "[Ephemeral Search](https://redislabs.com/blog/the-case-for-ephemeral-search/)" use case: lighweight, fast and expiration.
 
 ---
 ##  More

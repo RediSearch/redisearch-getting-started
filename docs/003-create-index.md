@@ -85,7 +85,7 @@ This is where RediSearch module is helping, and why it as been created.
 
 RediSearch simplifies a lot this by offering a simple and automatic way to create secondary indices on Redis Hashes. (more datastructure will eventually come)
 
-![Secondary Index](https://github.com/Redis-Developer/getting-started-redisearch/blob/master/docs/images/secondary-index.png)
+![Secondary Index](https://raw.githubusercontent.com/RediSearch/redisearch-getting-started/blob/master/docs/images/secondary-index.png)
 
 Using RediSearch if you want to query on a field, you must index the fields. Let's start by indexing the following fields in of our movies:
 
@@ -117,7 +117,7 @@ Before running some queries let's look at the command in detail:
 * `idx:movie` : the name of the index
 * `ON hash` : the type of structure to be indexed. *Note that in RediSearch 2.0 only hash structure are supported, this is parameter will allow RediSearch to index other structure in the future* 
 * `PREFIX 1 "movie:"` : the prefix of the keys that should be indexed. This is a list, so since we want to only index movie:* keys the number is 1. Suppose you want to index movies and tv_show that have the same fields, you can use: `PREFIX 2 "movie:" "tv_show:"` 
-* `SCHEMA ...`: define the schema, the fields and their type, to index, as you can see in the command, we are using TEXT, NUMERIC and TAG, and SORTABLE parameters.
+* `SCHEMA ...`: define the schema, the fields and their type, to index, as you can see in the command, we are using [TEXT](https://oss.redislabs.com/redisearch/Query_Syntax/#a_few_query_examples), [NUMERIC](https://oss.redislabs.com/redisearch/Query_Syntax/#numeric_filters_in_query) and [TAG](https://oss.redislabs.com/redisearch/Query_Syntax/#tag_filters), and [SORTABLE](https://oss.redislabs.com/redisearch/Sorting/) parameters.
 
 You can find information about the [FT.CREATE](https://oss.redislabs.com/redisearch/Commands/#ftcreate) command in the [documentation](https://oss.redislabs.com/redisearch/Commands/#ftcreate).
 

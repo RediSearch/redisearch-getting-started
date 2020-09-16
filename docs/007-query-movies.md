@@ -211,7 +211,7 @@ TAG is the structure to use when you want to do exact match condition on string/
   </b></i>
   </summary>
 
-This is very similar to the previous query, you can pass a list of value with the `|` to represent the OR.
+This is  similar to the previous query, you can pass a list of value with the `|` to represent the OR.
 
 
 ```
@@ -289,9 +289,9 @@ In this query it will be twao condition with a OR (`|`).
 
 Summary
 
-* A fieldless query will apply to all TEXT fields and will use the words and their base form (stemming)
+* Fieldless queries apply to all TEXT fields and use the words and their base form (stemming)
 * To apply a condition to a specific field you must use the `@field:` notation
-* Multiple conditions are "intersection" (AND condition)
+* Multiple conditions are "intersection" (AND condition), to do an "union" (OR condition), you have to use the "`|`" character.
 
 ----
 ### Sort
@@ -319,17 +319,18 @@ A very common use case when querying data is to sort the data on a specific fiel
     4) "Mechanic: Resurrection"
 ```
 
-The first line contains the number of documents (`186`) that matche the query condition, the the list of movies.
+The first line contains the number of documents (`186`) that match the query condition.
 
-The FT.SEARCH command by default returns the first 10 documents, you will see in the next query how to paginate.
+The FT.SEARCH command, by default, returns the first ten documents. You will see in the next query how to paginate.
 
+You can only use one SORTBY in an FT.SEARCH query, if you want to sort on multiple fields, for example sorting movies by `genre` ascending and `release_year` descending, you have to use an FT.AGGREGATE, this is covered in the [next section](008-aggregation.md).
 
+Note: The field used in the [SORTBY](https://oss.redislabs.com/redisearch/Sorting/#specifying_sortby) should be part of the index schema and defined as SORTABLE.
 ---
 </details>
 
 ----
 ### Paginate
-
 
 <details> 
   <summary>

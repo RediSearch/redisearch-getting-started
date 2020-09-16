@@ -12,7 +12,7 @@ You can find the same REST Service that uses RediSearch developed with different
 
 The frontend is created using a Vue.js application that let you run search queries using each of the REST backend.
 
-![Application Architecture](https://github.com/Redis-Developer/getting-started-redisearch/blob/master/docs/images/sample-app-archi.png)
+![Application Architecture](https://raw.githubusercontent.com/RediSearch/redisearch-getting-started/master/docs/images/sample-app-archi.png)
 
 
 ## Run the Sample Application
