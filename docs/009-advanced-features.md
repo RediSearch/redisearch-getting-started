@@ -8,7 +8,7 @@ It is also possible to create an index using a filter, for example create an ind
 
 The [`FILTER`](https://oss.redislabs.com/redisearch/Aggregations/#filter_expressions)` expression is using the [aggregation filter syntax(https://oss.redislabs.com/redisearch/Aggregations/#filter_expressions)], for example for the genre and release year it will be
 
-* `FILTER "@genre=='Drama" && @release_year>=1990 && @release_year<=2000`
+* `FILTER "@genre=='Drama' && @release_year>=1990 && @release_year<2000"`
 
 So when you create the index
 
