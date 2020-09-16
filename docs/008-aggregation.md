@@ -64,4 +64,4 @@ Let's now take some examples.
 
 
 ----
-Next: [Sample Application](009-application-development.md)
+Next: [Advanced Options](009-advanced-features.md)

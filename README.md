@@ -15,6 +15,7 @@ This project will let you discover the new major relese (2.0) and see how to use
 1. [Import Sample Dataset](docs/006-import-dataset.md) <small><i>(2mn)</i></small>
 1. [Querying the Movie Dataset](docs/007-query-movies.md) <small><i>(20mn)</i></small>
 1. [Aggregation](docs/008-aggregation.md) <small><i>(15mn)</i></small>
-1. [Sample Application](docs/009-application-development.md) 
+1. [Advanced Options](docs/009-advanced-features.md) <small><i>(5mn)</i></small>
+1. [Sample Application](docs/010-application-development.md) 
 
 
