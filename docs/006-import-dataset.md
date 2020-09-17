@@ -283,7 +283,7 @@ $ redis-cli -h localhost -p 6379 < ./sample-app/redisearch-docker/dataset/import
 ```
 
 
-Using Redis Insight or the redis-cli you can look at the dataset:
+Using Redis Insight or the `redis-cli` you can look at the dataset:
 
 ```
 > HMGET "movie:343" title release_year genre
@@ -307,6 +307,53 @@ Using Redis Insight or the redis-cli you can look at the dataset:
 ```
 
 You can also use the `DBSIZE` command to see how many keys you have in your database.
+
+---
+
+## Create Indexes
+
+
+**Create the `idx:movie` index:**
+
+```
+> FT.CREATE idx:movie ON hash PREFIX 1 "movie:" SCHEMA title TEXT SORTABLE plot TEXT WEIGHT 0.5 release_year NUMERIC SORTABLE rating NUMERIC SORTABLE votes NUMERIC SORTABLE genre TAG SORTABLE
+
+"OK"
+```
+
+The movies have been indexed, you can run the `FT.INFO "idx:movie"` command and look at the `num_docs` returned value. (should be 922).
+
+**Create the `idx:theater` index:**
+
+This index will mostly be used to show the geospatial capabilties of RediSearch.
+
+In the previous examples we have created indexes with 3 types:
+
+* `Text`
+* `Numeric`
+* `Tag`
+
+You will now discover a new type of field: `Geo`.
+
+The `theater` hashes contains a field `location` with the longitude and latitude, that will be used in the index as followed:
+
+```
+> FT.CREATE idx:theater ON hash PREFIX 1 "theater:" SCHEMA name TEXT SORTABLE location GEO
+
+"OK"
+```
+
+The theaters have been indexed, you can run the `FT.INFO "idx:theater"` command and look at the `num_docs` returned value. (should be 117).
+
+
+**Create the `idx:user` index:**
+
+
+```
+> FT.CREATE idx:user ON hash PREFIX 1 "user:" SCHEMA gender TAG country TAG SORTABLE last_login NUMERIC SORTABLE location GEO
+
+"OK"
+```
 
 
 ---
