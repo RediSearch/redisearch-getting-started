@@ -22,7 +22,7 @@ public class RediSearchRestController {
     }
 
 
-    @GetMapping("/search")
+    @GetMapping("/movies/search")
     public Map<String,Object> search(
             @RequestParam(name="q")String query,
             @RequestParam(name="offset", defaultValue="0")int offset,
@@ -33,7 +33,7 @@ public class RediSearchRestController {
     }
 
 
-    @GetMapping("/search_with_command")
+    @GetMapping("/movies/search_with_command")
     public Map<String,Object> searchWithJedisCommand(
             @RequestParam(name="q")String query,
             @RequestParam(name="offset", defaultValue="0")int offset,

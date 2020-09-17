@@ -47,9 +47,9 @@ This Docker Compose will start:
 Once started you can access the application and its services using the following URLs:
 
 * http://localhost:8084
-* http://localhost:8085/api/1.0/search?q=star&offset=0&limit=10
-* http://localhost:8086/api/1.0/search?q=star&offset=0&limit=10
-* http://localhost:8087/api/1.0/search?q=star&offset=0&limit=10
+* http://localhost:8085/api/1.0/movies/search?q=star&offset=0&limit=10
+* http://localhost:8086/api/1.0/movies/search?q=star&offset=0&limit=10
+* http://localhost:8087/api/1.0/movies/search?q=star&offset=0&limit=10
 
 
 

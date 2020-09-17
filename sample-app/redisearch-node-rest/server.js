@@ -11,7 +11,7 @@ const searchService = new SearchService()
 app.use(cors())
 
 
-app.get('/api/1.0/search', (req, res) => {
+app.get('/api/1.0/movies/search', (req, res) => {
   let queryString = req.query["q"];
   let offset = Number((req.query["offset"])?req.query["offset"]:"0");
   let limit = Number((req.query["limit"])?req.query["limit"]:"10");

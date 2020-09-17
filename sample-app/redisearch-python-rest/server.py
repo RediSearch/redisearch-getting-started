@@ -5,7 +5,7 @@ from redisearch import Client, Query
 import redis
 
 server_port = os.getenv("SERVER_PORT", "8087");
-redis_url = os.getenv("REDIS_URL", "redis://localhost:6369");
+redis_url = os.getenv("REDIS_URL", "redis://localhost:6379");
 redis_index = os.getenv("REDIS_INDEX", "idx:movie");
 
 app = Flask(__name__)
@@ -29,7 +29,7 @@ def home():
     return {"status" : "Python REST Servicve is UP", "api" : "/api/1.0/search"}
 
 
-@app.route('/api/1.0/search')
+@app.route('/api/1.0/movies/search')
 def search():
     offset = 0;
     limit = 10;

@@ -1,7 +1,7 @@
 const redis       = require('redis');
 const redisearch  = require('redis-redisearch');
 
-let redisUrl = process.env.REDIS_URL || "redis://localhost:6369";
+let redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
 let indexName = process.env.REDIS_INDEX || "idx:movie";
 
 console.log("Configuration Index: "+indexName+" - redisUrl: "+redisUrl);
