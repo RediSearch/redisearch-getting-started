@@ -25,6 +25,6 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "redis": "^3.0.2",
-    "redis-redisearch": "^1.0.1"
+    "redis-redisearch": "stockholmux/node_redis-redisearch"
   }
 }

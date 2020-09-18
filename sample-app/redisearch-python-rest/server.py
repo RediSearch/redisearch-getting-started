@@ -1,7 +1,11 @@
 from flask import Flask, request, g
 import os
 from flask_cors import CORS
-from redisearch import Client, Query
+
+from redisearch import *
+import redisearch.aggregation as aggregations
+import redisearch.reducers as reducers
+
 import redis
 
 server_port = os.getenv("SERVER_PORT", "8087");
@@ -67,6 +71,28 @@ def search():
         };
     
     return dictResult;
+
+@app.route('/api/1.0/movies/group_by/<field>')
+def get_movie_group_by(field):
+    req = aggregations.AggregateRequest("*").group_by(
+        "@"+ field,
+        reducers.count().alias("nb_of_movies")
+    ).sort_by( aggregations.Asc("@"+field)).limit(0, 1000);
+
+    res = g.movieIdx.aggregate(req);
+
+    reslist = []
+    for row in res.rows:
+        item ={ row[0].decode("utf-8") : row[1].decode("utf-8") , row[2].decode("utf-8") : int(row[3].decode("utf-8")) };
+        reslist.append( item );
+
+    dictResult = {
+        "totalResults" : len(res.rows),
+        "rows" : reslist,
+    };
+
+    return  dictResult;
+
 
 def docs_to_dict(docs):
     reslist = []

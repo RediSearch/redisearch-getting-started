@@ -90,8 +90,54 @@ let SearchService = function() {
 
     }
 
+    let _getMovieGroupBy = function(field, callback) {
+        let retValue = {
+            totalResults : 0,
+            rows : [],
+            raw : [] // get the data as returned by the API
+        };
+
+        // prepare the "native" FT.AGGREGATE call
+        // FT.AGGREGATE IDX_NAME queryString  [options]
+        let pipeline = [
+            indexName,      // name of thje inde
+            "*",            // query string,
+            "GROUPBY", "1", `@${field}`, // group by
+            "REDUCE", "COUNT", "0", "AS", "nb_of_movies", //count the numbe rof movie by group
+            "SORTBY", "2", `@${field}`, "ASC", // sorted by the genre
+            "LIMIT", "0", "1000",  // get all genre expecting less than 100 genres
+        ];  
+
+        client.ft_aggregate( 
+            pipeline,
+            function(err, aggrResult) {
+
+                // transform array into document
+                // this should be added to a generic function
+                // ideally into the library itself
+                retValue.totalResults = aggrResult[0];
+
+                // loop on the results starting at element 1
+                for (var i = 1; i <= aggrResult.length-1 ; i++){
+                    const item = aggrResult[i];
+                    let doc = {};
+                    for (var j=0, len=item.length; j < len; j++) {
+                        doc[ item[j] ] = item[j+1]
+                        doc[ item[j+2] ] = item[j+3]
+                        j=j+3;
+                    }
+                    retValue.rows.push(doc);
+                }
+                retValue.raw = aggrResult;
+                callback(err,retValue);
+            });
+
+    }
+
+
     return {
         search: _search,
+        getMovieGroupBy: _getMovieGroupBy,
     };
 
 }

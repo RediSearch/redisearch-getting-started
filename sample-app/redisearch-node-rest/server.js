@@ -40,6 +40,11 @@ app.get('/api/1.0/movies/search', (req, res) => {
       });
 })
 
+app.get('/api/1.0/movies/group_by/:field', (req, res) =>{
+  searchService.getMovieGroupBy(req.params['field'], function(err, result){
+    res.json(result);
+  });
+})
 
 app.get('/api/1.0/', (req, res) => {
     res.json({"status" : "started"});

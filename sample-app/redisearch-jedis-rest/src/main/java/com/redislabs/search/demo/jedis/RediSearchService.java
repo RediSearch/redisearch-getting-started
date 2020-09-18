@@ -1,9 +1,13 @@
 package com.redislabs.search.demo.jedis;
 
 import com.redislabs.search.demo.jedis.util.RediSearchCommands;
+import io.redisearch.AggregationResult;
 import io.redisearch.Document;
 import io.redisearch.Query;
 import io.redisearch.SearchResult;
+import io.redisearch.aggregation.AggregationBuilder;
+import io.redisearch.aggregation.SortedField;
+import io.redisearch.aggregation.reducers.Reducers;
 import io.redisearch.client.Client;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +19,7 @@ import redis.clients.jedis.JedisPool;
 import javax.annotation.PostConstruct;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -117,9 +118,39 @@ public class RediSearchService {
         return returnValue;
     }
 
-
     public Map<String,Object> search(String queryString ){
         return search(queryString, 0, 10, null, true);
+    }
+
+    public Map<String,Object> getMovieGroupBy(String groupByField) {
+        Map<String,Object> result = new HashMap<>();
+
+        // Create an aggregation query that list the genre
+        // FT.AGGREGATE idx:movie "*" GROUPBY 1 @genre REDUCE COUNT 0 AS nb_of_movies SORTBY 2 @genre ASC
+        AggregationBuilder aggregation = new AggregationBuilder()
+                .groupBy("@"+groupByField, Reducers.count().as("nb_of_movies"))
+                .sortBy( SortedField.asc("@"+groupByField))
+                .limit(0,1000); // get all rows
+
+        AggregationResult aggrResult = rediSearchClient.aggregate(aggregation);
+        int resultSize = aggrResult.getResults().size();
+
+        List<Map<String, Object>> docsToReturn = new ArrayList<>();
+        List<Map<String, Object>> results =  aggrResult.getResults();
+
+        result.put("totalResults",aggrResult.totalResults);
+
+        List<Map<String,Object>> formattedResult = new ArrayList<>();
+
+        // get all result rows and format them
+        for (int i = 0; i <  resultSize  ; i++) {
+            Map<String, Object> entry =  new HashMap<>();
+            entry.put(groupByField, aggrResult.getRow(i).getString(groupByField));
+            entry.put("nb_of_movies", aggrResult.getRow(i).getLong("nb_of_movies"));
+            formattedResult.add(entry);
+        }
+        result.put("rows", formattedResult);
+        return result;
     }
 
     public Map<String,Object> searchWithJedisCommand(String queryString, int offset, int limit, String sortBy, boolean ascending) {
