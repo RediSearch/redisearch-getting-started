@@ -23,9 +23,9 @@ The application and all the services, including RediSearch, are available as a D
 If you have not already downloaded the project, clone it:
 
 ```
-> git clone https://github.com/redis-developer/getting-started-redisearch.git
+> git clone https://github.com/RediSearch/redisearch-getting-started.git
 
-> cd getting-started-redisearch
+> cd redisearch-getting-started
 ```
 
 
