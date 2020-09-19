@@ -1,0 +1,32 @@
+[
+    {
+        "title" : "All Movies",
+        "cli" : "FT.SEARCH 'idx:movie' '*'",
+        "form" : "*"
+    },
+    {
+        "title" : "All 'Action' Movies",
+        "cli" : "FT.SEARCH 'idx:movie' '@genre:{Action}'",
+        "form" : "@genre:{Action}"
+    },
+    {
+        "title" : "All movies released in 2000",
+        "cli" : "FT.SEARCH 'idx:movie' '@release_year:[2000 2000]'",
+        "form" : "@release_year:[2000 2000]"
+    },
+    {
+        "title" : "'Drama' from 2010 to 2020",
+        "cli" : "FT.SEARCH 'idx:movie' '@genre:{Drama} @release_year:[2010 2020]'",
+        "form" : "@genre:{Drama} @release_year:[2010 2020]"
+    },
+    {
+        "title" : "Star Wars Movies",
+        "cli" : "FT.SEARCH 'idx:movie' 'star wars",
+        "form" : "star wars"
+    },
+    {
+        "title" : "Star Wars movies that does NOT mention Jedi",
+        "cli" : "FT.SEARCH 'idx:movie' 'star wars",
+        "form" : "star wars -jedi"
+    }
+]
