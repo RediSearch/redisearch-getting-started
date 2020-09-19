@@ -58,7 +58,7 @@
           <b-card bg-variant="light" >
 
             <b-row>
-              <b-col cols="4">
+              <b-col cols="5">
 
             <b-form @submit="search" >
               <b-form-group
@@ -69,7 +69,7 @@
               </b-form-group>
               
             <b-form-group 
-                label="REST Implementation"
+                label="REST"
                 label-cols=2>
               <b-form-radio 
                   @change.native="switchLangage"
@@ -102,7 +102,7 @@
             </b-form>
 
               </b-col>
-              <b-col cols="8">
+              <b-col cols="7">
                 <br/>
                 RediSearch Query:<br/> 
                 <small class="text-monospace">FT.SEARCH idx:movie "{{searchQuery}}"</small>
