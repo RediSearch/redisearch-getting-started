@@ -5,6 +5,11 @@
         "form" : "*"
     },
     {
+        "title" : "Fuzzy Search 'empre', for Empire",
+        "cli" : "FT.SEARCH 'idx:movie' '%empre%'",
+        "form" : "%empre%"
+    },
+    {
         "title" : "All 'Action' Movies",
         "cli" : "FT.SEARCH 'idx:movie' '@genre:{Action}'",
         "form" : "@genre:{Action}"
