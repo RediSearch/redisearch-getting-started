@@ -34,7 +34,7 @@
 <router-view />
 
 
-<a href="https://github.com/redis-developer/getting-started-redisearch"><img src="/imgs/forkme_left_red.svg" style="position:absolute;top:0;left:0;" alt="Fork me on GitHub"></a>
+<a href="https://github.com/RediSearch/redisearch-getting-started"><img src="/imgs/forkme_left_red.svg" style="position:absolute;top:0;left:0;" alt="Fork me on GitHub"></a>
 
   </div>
 </template>
