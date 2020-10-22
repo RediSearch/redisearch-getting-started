@@ -2,7 +2,7 @@
 
 ## Create an index using a Filter
 
-In the previous examples, the indices have been created using a `PREFIX`, where all the keys that are matching the type and the prefix are indexed.
+In the previous examples, the indices were created using a `PREFIX`, where all the keys matching the type and prefix are indexed.
 
 It is also possible to create an index using a filter, for example create an index with all the "Drama" movies released between 1990 and 2000 (2000 not included).
 
@@ -10,18 +10,18 @@ The [`FILTER`](https://oss.redislabs.com/redisearch/Aggregations/#filter_express
 
 * `FILTER "@genre=='Drama' && @release_year>=1990 && @release_year<2000"`
 
-So when you create the index
+So when you create the index:
 
 `FT.CREATE idx:drama ON Hash PREFIX 1 "movie:" FILTER "@genre=='Drama' && @release_year>=1990 && @release_year<2000" SCHEMA title TEXT SORTABLE release_year NUMERIC SORTABLE `
 
-You can run the `FT.INFO idx:drama` command to look at the index defintions and statistics.
+You can run the `FT.INFO idx:drama` command to look at the index definitions and statistics.
 
 Notes
 * The `PREFIX` is not optional.
-* In this appliation this index is not usefull since you can get the same data from the `idx:movie`
+* In this appliation this index is not useful since you can get the same data from the `idx:movie`
 
 
-You can check that the index has the good data indexed for by running the following queries that should return the same number of documents.
+You can check that the data has been indexed by running the following queries that should return the same number of documents.
 
 On `idx:drama` 
 
