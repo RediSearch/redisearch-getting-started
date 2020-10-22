@@ -1,6 +1,6 @@
 # Sample Dataset
 
-In the previous steps you used only few movies, let's now import:
+In the previous steps you used only a few movies, let's now import:
 
 * More movies *to discover more queries*.
 * Theaters *to discover the geospatial capabilities*.
@@ -10,16 +10,16 @@ In the previous steps you used only few movies, let's now import:
 
 **Movies**
 
-The file `sample-app/redisearch-docker/dataset/import_actors.redis` is a script that create 922 Hashes.
+The file `sample-app/redisearch-docker/dataset/import_actors.redis` is a script that creates 922 Hashes.
 
 The movie hashes contain the following fields.
 
 * **`movie:id`** : The unique ID of the movie, internal to this database (used as the key of the hash)
 * **`title`** : The title of the movie.
 * **`plot`** : A summary of the movie.
-* **`genre`** : The genre of the movie, for now a movie will only h ave one single genre.
-* **`release_year`** : The year the movie has been released as a numerical value.
-* **`rating`** : The ratings from the public numerical value.
+* **`genre`** : The genre of the movie, for now a movie will only have a single genre.
+* **`release_year`** : The year the movie was released as a numerical value.
+* **`rating`** : A numeric value representing the public's rating for this movie.
 * **`votes`** : Number of votes.
 * **`poster`** : Link to the movie poster.
 * **`imdb_id`** : id of the movie in the [IMDB](https://imdb.com) database.
@@ -88,7 +88,7 @@ The movie hashes contain the following fields.
 
 **Theaters**
 
-The file `sample-app/redisearch-docker/dataset/import_theaters.redis` is a script that create 117 Hashes (used for Geospatial queries). *This dataset is a list of New York Theaters, and not movie theaters, but it is not that critical for this project ;).*
+The file `sample-app/redisearch-docker/dataset/import_theaters.redis` is a script that creates 117 Hashes (used for Geospatial queries). *This dataset is a list of New York Theaters, and not movie theaters, but it is not that critical for this project ;).*
 
 The theater hashes contain the following fields.
 
@@ -161,21 +161,21 @@ The theater hashes contain the following fields.
 
 **Users**
 
-The file `sample-app/redisearch-docker/dataset/import_users.redis` is a script that create 5996 Hashes.
+The file `sample-app/redisearch-docker/dataset/import_users.redis` is a script that creates 5996 Hashes.
 
 The user hashes contain the following fields.
 
 * **`user:id`** : The unique ID of the user.
 * **`first_name`** : The first name of the user.
 * **`last_name`** : The last name of the user.
-* **`email`** : The email the user.
-* **`gender`** : The gender the user (`female`/`male`).
-* **`country`** : The country name the user.
-* **`country_code`** : The country code the user.
-* **`city`** : The city the user.
-* **`longitude`** : The longitude the user.
-* **`latitude`** : The latitude the user.
-* **`last_login`** : The last login the user, as EPOC time.
+* **`email`** : The email of the user.
+* **`gender`** : The gender of the user (`female`/`male`).
+* **`country`** : The country name of the user.
+* **`country_code`** : The country code of the user.
+* **`city`** : The city of the user.
+* **`longitude`** : The longitude of the user.
+* **`latitude`** : The latitude of the user.
+* **`last_login`** : The last login time for the user, as EPOC time.
 * **`ip_address`** : The IP address of the user.
 
 <details> 
@@ -321,7 +321,7 @@ You can also use the `DBSIZE` command to see how many keys you have in your data
 "OK"
 ```
 
-The movies have been indexed, you can run the `FT.INFO "idx:movie"` command and look at the `num_docs` returned value. (should be 922).
+The movies have now been indexed, you can run the `FT.INFO "idx:movie"` command and look at the `num_docs` returned value. (should be 922).
 
 **Create the `idx:theater` index:**
 
@@ -335,7 +335,7 @@ In the previous examples we have created indexes with 3 types:
 
 You will now discover a new type of field: `Geo`.
 
-The `theater` hashes contains a field `location` with the longitude and latitude, that will be used in the index as followed:
+The `theater` hashes contains a field `location` with the longitude and latitude, that will be used in the index as follows:
 
 ```
 > FT.CREATE idx:theater ON hash PREFIX 1 "theater:" SCHEMA name TEXT SORTABLE location GEO
