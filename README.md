@@ -5,7 +5,7 @@
 
 [RediSearch](https://redisearch.io) is a real-time indexing and search engine.
 
-This project will let you discover the new major relese (2.0) and see how to use it, in your application.
+This project will let you discover the new major release (2.0) and see how to use it, in your application.
 
 1. [Introduction](docs/001-introduction.md) <small><i>(2mn)</i></small>
 1. [Install RediSearch 2.0 & Insert Data](docs/002-install-redisearch.md) <small><i>(2mn)</i></small>
