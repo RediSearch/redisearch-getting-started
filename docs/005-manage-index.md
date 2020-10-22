@@ -3,14 +3,14 @@
 
 ### Listing and inspecting the indexes
 
-`FT._LIST` command provides the list of all RediSearch index of your database:
+The `FT._LIST` command provides a list of all RediSearch indexes in your database:
 
 ```
 > FT._LIST
 1) "idx:movie"
 ```
 
-`FT.INFO` provides information about the index
+`FT.INFO` provides information about a specific index:
 
 ```
 > FT.INFO "idx:movie" 
@@ -31,7 +31,7 @@
 
 ### Updating your Indexing
 
-As you are building your application and adding more information to the database you may need to add new field to the index. It is possible using the `FT.ALTER` command.
+As you are build your application and add more information to the database you may need to add new fields to the index. The `FT.ALTER` command enables you to do this.
 
 ```
 > FT.ALTER idx:movie SCHEMA ADD plot TEXT WEIGHT 0.5
@@ -48,10 +48,10 @@ Let's do a query with the new indexed field:
 ```
 
 
-### Droping the Index
+### Dropping the Index
 
 
-You can now drop the index using the `FT.DROPINDEX` command.
+You can drop an index using the `FT.DROPINDEX` command.
 
 ```
 > FT.DROPINDEX idx:movie
@@ -59,7 +59,7 @@ You can now drop the index using the `FT.DROPINDEX` command.
 "OK"
 ```
 
-Droping the index does not impact the indexed hashes, this means that the movies are still inside the database.
+Dropping an index does not impact the indexed hashes, this means that the movies are still inside the database.
 
 ```
 >SCAN 0 MATCH movie:*
