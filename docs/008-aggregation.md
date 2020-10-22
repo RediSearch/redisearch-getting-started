@@ -1,12 +1,12 @@
 # Aggregation
 
-A common need for application, in addition to retrieving information as a document list, like you have done with the "`FT.SEARCH`" command, is to do some "aggregation".
+A common need for applications, in addition to retrieving information as a document list, like you have done with the "`FT.SEARCH`" command, is to do some "aggregation".
 
-For example if we look at the movie documents, you may want to retrieve the number of movies group by release year starting with the most recents ones.
+For example if we look at the movie documents, you may want to retrieve the number of movies grouped by release year starting with the most recent ones.
 
-For this, RediSearch is providing the FT.AGGREGATE command, the aggregation are describe as data processing pipeline.
+For this, RediSearch provides the FT.AGGREGATE command, with aggregations described as a data processing pipeline.
 
-Let's now take some examples.
+Let's check out some examples.
 
 ## Group By & Sort By
 
@@ -133,9 +133,9 @@ Let's now take some examples.
   </b></i>
   </summary>
 
-The `idx:user` index contains the last_login field. This field stores the loast login time as EPOC timestamp.
+The `idx:user` index contains the last_login field. This field stores the last login time as an EPOC timestamp.
 
-RediSearch aggregation allow your to apply transformation to each record. This is done using the [APPLY](https://oss.redislabs.com/redisearch/Aggregations/#apply_expressions) parameter.
+RediSearch aggregation allows you to apply transformations to each record. This is done using the [APPLY](https://oss.redislabs.com/redisearch/Aggregations/#apply_expressions) parameter.
 
 For this example you have to use a [date/time](https://oss.redislabs.com/redisearch/Aggregations/#list_of_datetime_apply_functions) function to extract the month and year from the timestamp.
 
@@ -192,9 +192,9 @@ Using the date/time Apply functions it is possible to extract the day of the wee
 
 ## Filter
 
-In the previous example you have use the `query string` parameter to select all documents (`"*"`) or a subset of the documents (`"@gender:{female}"`)
+In the previous example you used the `query string` parameter to select all documents (`"*"`) or a subset of the documents (`"@gender:{female}"`)
 
-It is also possible to filter the result using a predicate expression relating to values in each result. TThey are is applied post-query and relate to the current state of the pipeline. This is done using the [FILTER](https://oss.redislabs.com/redisearch/Aggregations/#filter_expressions) parameter. 
+It is also possible to filter the results using a predicate expression relating to values in each result. This is applied post-query and relates to the current state of the pipeline. This is done using the [FILTER](https://oss.redislabs.com/redisearch/Aggregations/#filter_expressions) parameter. 
 
 
 <details> 
