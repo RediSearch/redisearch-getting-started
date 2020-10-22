@@ -1,6 +1,6 @@
 # Query Data
 
-The database contains few movies, and an index, it is not possible to execute some queries.
+The database contains a few movies, and an index, it is now possible to execute some queries.
 
 ## Queries
 
@@ -24,11 +24,11 @@ The database contains few movies, and an index, it is not possible to execute so
 
 ```
 
-The FT.SEARCH commands returns the list of result starting with the number of results, then the list of elements (keys & fields).
+The FT.SEARCH commands returns a list of results starting with the number of results, then the list of elements (keys & fields).
 
 As you can see the movie *Star Wars: Episode V - The Empire Strikes Back* is found, even though you used only the word “war” to match “Wars” in the title. This is because the title has been indexed as text, so the field is [tokenized](https://oss.redislabs.com/redisearch/Escaping/) and [stemmed](https://oss.redislabs.com/redisearch/Stemming/).
 
-Later when looking in more details on the query syntax you will learn more the search capabilities.
+Later when looking at the query syntax in more detail you will learn more about the search capabilities.
 
 It is also possible to limit the list of fields returned by the query using the `RETURN` parameter, let's run the same query, and return only the title and release_year:
 
@@ -48,9 +48,9 @@ It is also possible to limit the list of fields returned by the query using the 
    4) "1980"
 ```
 
-This query does not specific any "field" and still return some movie, this is because RediSearch will search by default in all TEXT fields. In the current index only the title is present as a TEXT field. You will see later how to update an index, to add more fields to it.
+This query does not specify any "field" and still returns some movies, this is because RediSearch will search all TEXT fields by default. In the current index only the title is present as a TEXT field. You will see later how to update an index, to add more fields to it.
 
-If you need to do a query on a specific field you can specify it using the `@field:` syntax, for example:
+If you need to perform a query on a specific field you can specify it using the `@field:` syntax, for example:
 
 ```
 > FT.SEARCH idx:movie "@title:war" RETURN 2 title release_year
@@ -59,7 +59,7 @@ If you need to do a query on a specific field you can specify it using the `@fie
 ---
 **Example : *All the movies that contains the string "`war` but NOT the `jedi` one"***
 
-Adding the string `-jedi` (minus) will ask the query engine to not return the values that contain `jedi`.
+Adding the string `-jedi` (minus) will ask the query engine not to return values that contain `jedi`.
 
 ```
 > FT.SEARCH idx:movie "war -jedi" RETURN 2 title release_year
@@ -75,7 +75,7 @@ Adding the string `-jedi` (minus) will ask the query engine to not return the va
 ---
 **Example : *All the movies that contains the string "`gdfather` using fuzzy search"***
 
-As you can see the word godfather is wrongly spelled, it is possible using a [fuzzy matching](https://oss.redislabs.com/redisearch/Query_Syntax/#fuzzy_matching). Fuzzy matches are performed based on [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) (LD).
+As you can see the word godfather contains a speelling error, it can however be matched using [fuzzy matching](https://oss.redislabs.com/redisearch/Query_Syntax/#fuzzy_matching). Fuzzy matches are performed based on [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) (LD).
 
 ```
 > FT.SEARCH idx:movie " %gdfather% " RETURN 2 title release_year
@@ -196,13 +196,13 @@ To exclude a value prepend it with `(` in the FILTER or query string, for exampl
 
 As part of this tutorial you have:
 
-1. Create few movies, as Redis hashes (*that we call document*) with the following key pattern `movie:*`
-2. Create an index using the `FT.CREATE` command
-3. Query the data using `FT.SEARCH`
+1. Created few movies, as Redis hashes (*that we call document*) with the following key pattern `movie:*`
+2. Created an index using the `FT.CREATE` command
+3. Queried the data using `FT.SEARCH`
 
-When creating the index, using  the `idx:movie ON hash PREFIX 1 "movie:"` parameter you are asking the indexing engine to look at all existing keys and index them.
+When creating the index, using the `idx:movie ON hash PREFIX 1 "movie:"` parameter you are asking the indexing engine to look at all existing keys and index them.
 
-Also new information that match this pattern/type, will be indexed.
+Also new information that matches this pattern/type, will be indexed.
 
 Let's count the number of movies, add a new one, and count again:
 
@@ -249,16 +249,16 @@ Now you **update** one of the field, and search for `007`
    4) "1997"
 ```
 
-When you *delete* the hash, the index is also updated, and the same happens the the key is expired (TTL-Time To Live). 
+When you *delete* the hash, the index is also updated, and the same happens when the key expires (TTL-Time To Live). 
 
-For example put a 20 sedonds expiration time to the James Bond movie:
+For example, set the James Bond movie to expire in 20 seconds time:
 
 ```
 > EXPIRE "movie:11033" 20
 
 ```
 
-You can run the following query, and you will see after 20 seconds the document is not here and the search query will not return any result, showing that the index has been upddated.
+You can run the following query, and you will that the document expires after 20 seconds and the search query will not return any results, showing that the index has been updated.
 
 ```
 > FT.SEARCH idx:movie "007" RETURN 2 title release_year
@@ -267,7 +267,7 @@ You can run the following query, and you will see after 20 seconds the document 
 
 ```
 
-> Note: When you are using Redis as your primary database you are not necessary using the TTL to delet record. However, if the data your are storing and indexing are transient, for example a caching layer at the top of another datastore or Web service, query user sessions content, ... This is often qualified as a "[Ephemeral Search](https://redislabs.com/blog/the-case-for-ephemeral-search/)" use case: lighweight, fast and expiration.
+> Note: When you are using Redis as your primary database you are not necessarily using TTLs to delete records. However, if the data you are storing and indexing are transient, for example a caching layer at the top of another datastore or Web service, query user sessions content, ... This is often qualified as a "[Ephemeral Search](https://redislabs.com/blog/the-case-for-ephemeral-search/)" use case: lightweight, fast and expiration.
 
 ---
 ##  More
