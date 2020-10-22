@@ -2,7 +2,7 @@
 
 
 
-As describe earlier in the tutorial, one of the goal of RediSearch is to provide rich querying capabilities such as:
+As described earlier in the tutorial, one of the goals of RediSearch is to provide rich querying capabilities such as:
 
 * simple and complex conditions
 * sorting
@@ -12,7 +12,7 @@ As describe earlier in the tutorial, one of the goal of RediSearch is to provide
 
 ### Conditions
 
-The best way to start to work with RediSearch queriy capabilities is to look at the various conditions options.
+The best way to start to work with RediSearch query capabilities is to look at the various conditions options.
 
 
 <details> 
@@ -49,12 +49,12 @@ The best way to start to work with RediSearch queriy capabilities is to look at 
 
 ```
 
-The first line contains the number of documents (`4`) that matche the query condition, then the list of movies.
+The first line contains the number of documents (`4`) that match the query condition, then the list of movies.
 
 This query is a "fieldless" condition, this means that the query engine has:
-* search into all the TEXT fields of the index(`title` and `plot`)
+* searched in all the TEXT fields of the index(`title` and `plot`)
 * for the word `heat` and related words, this is why the movie:736 is returned since it has the word `heated` in the plot ([stemming](https://oss.redislabs.com/redisearch/Stemming/))
-* returned the result sorted by the score, remember that the title as a weigt of 1.0, and the plot a weight of 0.5. So when the word or related words are found in the title the score is bigger.
+* returned the result sorted by score, remember that the title has a weight of 1.0, and the plot a weight of 0.5. So when the word or related words are found in the title the score is larger.
 ---
 </details>
 
@@ -98,7 +98,7 @@ So only 2 movies are returned.
   </b></i>
   </summary>
 
-For this you add parenthesis around the field condition and add the `-` sign to 'california'.
+For this you add parentheses around the field condition and add the `-` sign to 'california'.
 
 ```
 > FT.SEARCH "idx:movie" "@title:(heat -california)" RETURN 2 title plot
@@ -115,7 +115,7 @@ Only one movie is returned.
 
 If you do not put the `( .. )` the `-california` condition will be applied to all the text fields.
 
-You can do a test with the  folllowing queries:
+You can do test this with the following queries:
 
 ```
 > FT.SEARCH "idx:movie" "@title:(heat -woman)" RETURN 2 title plot
@@ -125,7 +125,7 @@ You can do a test with the  folllowing queries:
 > FT.SEARCH "idx:movie" "@title:heat -woman" RETURN 2 title plot
 ```
 
-As you can see the first query only search for woman in the title and return two movies "Heat" and "California Heat", where the second queries will eliminate "California Heat" from the list since the plot contains the word `woman`.
+As you can see the first query only searches for woman in the title and returns two movies "Heat" and "California Heat", where the second query eliminates "California Heat" from the list since the plot contains the word `woman`.
 
 ---
 </details>
@@ -139,11 +139,11 @@ As you can see the first query only search for woman in the title and return two
   </b></i>
   </summary>
 
-As you have seen earlier the movie index contains the:
+As you have seen earlier the movie index contains:
 * the `title` and plot as TEXT
 * the `genre` as TAG.
 
-You have seen ealier how to put a condition to a TEXT field.
+You saw earlier how to place a condition on a TEXT field.
 
 The [TAG](https://oss.redislabs.com/redisearch/Tags/) is a little bit different as the index engine does not do any stemming.
 
@@ -162,9 +162,9 @@ To set a condition on this field you must use the `@field:{value}` notation, the
    6) "Drama"
 ```
 
-As you can see this query is applying for condition on two different fields with a exact match on the TAG.
+As you can see this query applies conditions to two different fields with an exact match on the TAG.
 
-TAG is the structure to use when you want to do exact match condition on string/words.
+TAG is the structure to use when you want to do exact matches on strings/words.
 ---
 </details>
 
@@ -176,7 +176,7 @@ TAG is the structure to use when you want to do exact match condition on string/
   </b></i>
   </summary>
 
-This is  similar to the previous query, you can pass a list of value with the `|` to represent the OR.
+This is similar to the previous query, you can pass a list of values with the `|` to represent the OR.
 
 
 ```
@@ -200,7 +200,7 @@ This is  similar to the previous query, you can pass a list of value with the `|
 ```
 
 
-You can also put the '|' between all the condition to search for example all the movies that have "heat" in the title, or that are Comedy or that are Drama. The query will look like:
+You can also put the '|' between all the conditions to search for example all movies that have "heat" in the title, or that are Comedy or that are Drama. The query will look like:
 
 ```
 FT.SEARCH "idx:movie" "@title:(heat) | @genre:{Drama|Comedy} " RETURN 3 title plot genre
@@ -217,9 +217,9 @@ FT.SEARCH "idx:movie" "@title:(heat) | @genre:{Drama|Comedy} " RETURN 3 title pl
 
 In this query, the new item is the query on a numeric field (release_year).
 
-like before, for the condition you have to use the `@field:` notation, but for a numeric field you have to put the interval of the condition.
+Like before, for the condition you have to use the `@field:` notation, but for a numeric field you have to put the interval of the condition.
 
-In this query it will be twao condition with a OR (`|`).
+In this query it will be two conditions with an OR (`|`).
 
 ```
 > FT.SEARCH "idx:movie" "@genre:{Mystery|Thriller} (@release_year:[2018 2018] | @release_year:[2014 2014] )"   RETURN 3 title release_year genre
@@ -256,7 +256,7 @@ Summary
 
 * Fieldless queries apply to all TEXT fields and use the words and their base form (stemming)
 * To apply a condition to a specific field you must use the `@field:` notation
-* Multiple conditions are "intersection" (AND condition), to do an "union" (OR condition), you have to use the "`|`" character.
+* Multiple conditions are "intersection" (AND condition), to do a "union" (OR condition), you have to use the "`|`" character.
 
 ----
 ### Sort
@@ -288,7 +288,7 @@ The first line contains the number of documents (`186`) that match the query con
 
 The FT.SEARCH command, by default, returns the first ten documents. You will see in the next query how to paginate.
 
-You can only use one SORTBY in an FT.SEARCH query, if you want to sort on multiple fields, for example sorting movies by `genre` ascending and `release_year` descending, you have to use an FT.AGGREGATE, this is covered in the [next section](008-aggregation.md).
+You can only use one SORTBY clause in an FT.SEARCH query, if you want to sort on multiple fields, for example sorting movies by `genre` ascending and `release_year` descending, you have to use an FT.AGGREGATE, this is covered in the [next section](008-aggregation.md).
 
 Note: The field used in the [SORTBY](https://oss.redislabs.com/redisearch/Sorting/#specifying_sortby) should be part of the index schema and defined as SORTABLE.
 ---
@@ -319,12 +319,12 @@ Note: The field used in the [SORTBY](https://oss.redislabs.com/redisearch/Sortin
 ```
 
 The result is very similar to the previous query:
-* 186 document found
-* the first document is the older one, released in 1966
-* the latest movie of the batch is released in 2014
+* 186 documents found
+* the first document is the oldest one, released in 1966
+* the latest movie of the batch was released in 2014
 
 
-To paginate to the next batch you need to change the limit as follow:
+To paginate to the next batch you need to change the limit as follows:
 
 ```
 > FT.SEARCH "idx:movie" "@genre:{Action}" LIMIT 100 200  SORTBY release_year ASC RETURN 2 title release_year
@@ -342,7 +342,7 @@ To paginate to the next batch you need to change the limit as follow:
   <i><b>Count the number of 'Action' movies</b></i>
   </summary>
 
-  Based on the sample queries that you have seen earlier, if you put the `LIMIT 0 0` it will give you the number of document based on the query condition.
+  Based on the sample queries that you have seen earlier, if you specify `LIMIT 0 0` it will give you the number of documents based on the query condition.
 
 ```
 > FT.SEARCH "idx:movie" "@genre:{Action}" LIMIT 0 0
@@ -358,7 +358,7 @@ To paginate to the next batch you need to change the limit as follow:
   <i><b>Count the number of 'Action' movies released in 2017 </b></i>
   </summary>
 
-  Based on the sample queries that you have seen earlier, if you put the `LIMIT 0 0` it will give you the number of document based on the query condition.
+  Based on the sample queries that you have seen earlier, if you specify `LIMIT 0 0` it will give you the number of documents based on the query condition.
 
 ```
 > FT.SEARCH "idx:movie" "@genre:{Action}" FILTER release_year 2017 2017 LIMIT 0 0
@@ -383,12 +383,12 @@ You can also use the following syntax:
 
 <details> 
   <summary>
-  <i><b>Find theathers, name and address, that are at less than 400 meters from MOMA</b></i>
+  <i><b>Find theaters, name and address, that are at less than 400 meters from MOMA</b></i>
   </summary>
 
 Suppose you are at the MOMA, located at "11 W 53rd St, New York", and you want to find all the theaters located in a 400m radius.
 
-For this you need to gather the location `-73.9798156,40.7614367` (long/lat) of your current location, and execute the following query:
+For this you need to determine the lat/long position of your current location `-73.9798156,40.7614367`, and execute the following query:
 
 ```
 > FT.SEARCH "idx:theater" "@location:[-73.9798156 40.7614367 400 m]" RETURN 2 name address
