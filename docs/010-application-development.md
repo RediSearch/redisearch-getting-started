@@ -60,7 +60,3 @@ Run the following command to delete the containers & images:
 ```
 > docker-compose down -v --rmi local --remove-orphans
 ```
-
-
----
-Next: [Sample Application](008-application-development.md)
