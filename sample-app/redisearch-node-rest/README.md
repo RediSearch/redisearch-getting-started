@@ -50,7 +50,7 @@ app.listen(port, () => {
 
 ```
 
-This will be the base of the various API endpoint
+This will be the base of the various API endpoints.
 
 
 #### 4- Create a NodeSearchService
@@ -70,7 +70,7 @@ You can run build and run the application from docker using the following comman
 
 ```
 
-This command will create a new image and build the maven project into it.
+This command will create a new image and build the Node.js project into it.
 
 **Run**
 
@@ -82,7 +82,20 @@ This command will create a new image and build the maven project into it.
      -p 8086:8086 redis/search-backend-node
 ```
 
+### Running the application locally
+
+To run the application on your local machine:
+
+```shell script
+> npm install
+> npm start
+```
+
+### Accessing the API
+
 You can now access the REST Search service using the following URL:
 
 * http://localhost:8086/api/1.0/search?q=man&limit=10&offset=20
+
+
 
