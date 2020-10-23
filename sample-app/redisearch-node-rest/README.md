@@ -95,7 +95,7 @@ To run the application on your local machine:
 
 You can now access the REST Search service using the following URL:
 
-* http://localhost:8086/api/1.0/search?q=man&limit=10&offset=20
+* http://localhost:8086/api/1.0/movies/search?q=man&limit=10&offset=20
 
 
 
