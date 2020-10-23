@@ -10,7 +10,7 @@ In the previous steps you used only a few movies, let's now import:
 
 **Movies**
 
-The file `sample-app/redisearch-docker/dataset/import_actors.redis` is a script that creates 922 Hashes.
+The file `sample-app/redisearch-docker/dataset/import_movies.redis` is a script that creates 922 Hashes.
 
 The movie hashes contain the following fields.
 
