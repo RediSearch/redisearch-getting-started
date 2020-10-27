@@ -1,3 +1,6 @@
+[![Forum](https://img.shields.io/badge/Forum-RediSearch-blue)](https://forum.redislabs.com/c/modules/redisearch/)
+[![Discord](https://img.shields.io/discord/697882427875393627?style=flat-square)](https://discord.gg/xTbqgTB)
+
 # Getting Started with RediSearch 2.0
 
 <img src="https://raw.githubusercontent.com/RediSearch/redisearch-getting-started/master/docs/images/logo.svg" width="200">
