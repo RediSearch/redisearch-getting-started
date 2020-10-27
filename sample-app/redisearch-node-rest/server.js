@@ -1,60 +1,61 @@
-const express = require('express')
-const cors = require('cors')
-const app = express()
+const express = require('express');
+const cors = require('cors');
+const app = express();
 const serverPort = process.env.SERVER_PORT || 8086;
 
 
 
 const SearchService = require('./NodeSearchService');
-const searchService = new SearchService()
+const searchService = new SearchService();
 
-app.use(cors())
+app.use(cors());
 
 
 app.get('/api/1.0/movies/search', (req, res) => {
-  let queryString = req.query["q"];
-  let offset = Number((req.query["offset"])?req.query["offset"]:"0");
-  let limit = Number((req.query["limit"])?req.query["limit"]:"10");
-  let sortBy = req.query["sortby"];
-  let ascending = req.query["ascending"];
+  const queryString = req.query.q;
+  const offset = Number((req.query.offset)?req.query.offset:'0');
+  const limit = Number((req.query.limit)?req.query.limit:'10');
+  const sortBy = req.query.sortby;
+  const ascending = req.query.ascending;
 
-  let options = {
-    offset : offset,
-    limit : limit
-  }
+  const options = {
+    offset,
+    limit
+  };
 
   if (sortBy) {
     options.sortBy = sortBy;
-    options.ascending = true; // if sorted by default it is asceending
+    options.ascending = true; // if sorted by default it is ascending
   }
 
   if (ascending) {
-    options.ascending = (ascending==1 || ascending.toLocaleLowerCase()==="true");
+    options.ascending = (ascending==1 || ascending.toLocaleLowerCase()==='true');
   }
   
   searchService.search(
-      queryString,            // query string
-      options,                     // options
-      function(err, result){  // callbacl
-          res.json(result);
-      });
+    queryString,            // query string
+    options,                // options
+    function(err, result){  // callback
+      res.json(result);
+    }
+  );
 })
 
 app.get('/api/1.0/movies/group_by/:field', (req, res) =>{
-  searchService.getMovieGroupBy(req.params['field'], function(err, result){
+  searchService.getMovieGroupBy(req.params.field, function(err, result){
     res.json(result);
   });
-})
+});
 
 app.get('/api/1.0/', (req, res) => {
-    res.json({"status" : "started"});
-})
+  res.json({status: 'started'});
+});
   
 
 app.get('/', (req, res) => {
-  res.send('RediSearch Node REST Server Started')
-})
+  res.send('RediSearch Node REST Server Started');
+});
 
 app.listen(serverPort, () => {
-  console.log(`RediSearch Node listening at http://localhost:${serverPort}`)
-})
+  console.log(`RediSearch Node listening at http://localhost:${serverPort}`);
+});
