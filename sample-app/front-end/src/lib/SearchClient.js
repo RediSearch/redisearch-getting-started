@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const javaRestApiServer = (process.env.VUE_APP_SEARCH_API_JAVA || "http://localhost:8085");
-const nodeRestApiServer = (process.env.VUE_APP_SEARCH_API_NODE || "http://localhost:8086");
-const pythonRestApiServer = (process.env.VUE_APP_SEARCH_API_PYTHON || "http://localhost:8087");
+const javaRestApiServer = (process.env.VUE_APP_SEARCH_API_JAVA || "http://34.71.52.16:8085");
+const nodeRestApiServer = (process.env.VUE_APP_SEARCH_API_NODE || "http://34.71.52.16:8086");
+const pythonRestApiServer = (process.env.VUE_APP_SEARCH_API_PYTHON || "http://34.71.52.16:8087");
 
 
 export const SearchClient = {
