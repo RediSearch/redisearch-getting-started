@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<version.jredisearch>2.0.0-SNAPSHOT</version.jredisearch>
+		<version.jredisearch>2.0.0</version.jredisearch>
 		<version.javax.inject>1</version.javax.inject>
 	</properties>
 
