@@ -1,4 +1,4 @@
-FROM redislabs/redisearch:2.0.0
+FROM redislabs/redisearch:2.0.2
 
 COPY import-data.sh /data/import-data.sh
 COPY ./dataset/import_actors.redis /data/import_actors.redis
