@@ -146,7 +146,7 @@ export default {
   data() {
     return {
       apiServer : "node",
-      searchQuery : undefined,
+      searchQuery : "*",
       searchOffset : 0,
       searchLimit : 10,
       searchResult : {
@@ -177,6 +177,7 @@ export default {
     this.$sampleQueries.forEach(query => {
       this.queryList.push({ value: query.form, text: query.title });
     });
+    this.search();
   },
   methods : {
 
