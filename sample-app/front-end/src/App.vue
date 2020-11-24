@@ -13,7 +13,7 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav >
         <b-nav-item active  >|</b-nav-item>
-        <b-nav-item active to="/" >Basic Search</b-nav-item>
+        <b-nav-item active to="/search" >Basic Search</b-nav-item>
         <b-nav-item active  >|</b-nav-item>
         <b-nav-item active to="/faceted-search" >Faceted Search</b-nav-item>
       </b-navbar-nav>

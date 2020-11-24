@@ -106,6 +106,9 @@
         <b-col>
         {{ doc.fields.genre }}
         </b-col>
+        <b-col>
+          <b-button size="sm" @click="goToMovie( doc.meta.id)">View</b-button>
+        </b-col>        
         <b-col class="text-right">
         {{ doc.fields.rating }}
         </b-col>
@@ -146,7 +149,7 @@ export default {
   data() {
     return {
       apiServer : "node",
-      searchQuery : undefined,
+      searchQuery : "*",
       searchOffset : 0,
       searchLimit : 10,
       searchResult : {
@@ -177,6 +180,7 @@ export default {
     this.$sampleQueries.forEach(query => {
       this.queryList.push({ value: query.form, text: query.title });
     });
+    this.search();
   },
   methods : {
 
@@ -202,15 +206,21 @@ export default {
         this.perPage = this.searchResult.meta.limit;
       }
     },
+
     changePage(page) {
       this.searchOffset = page;
       this.search(); 
     },
+
     selectSampleQuery(value) {
       this.searchQuery = value;
       this.searchOffset = 0; 
       this.search();
-    }
+    },
+
+    goToMovie(id) {
+      this.$router.push({ name: 'MovieForm', params: { id: id }});
+    },    
   },
 
 }

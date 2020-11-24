@@ -142,6 +142,9 @@
         <b-col>
         {{ doc.fields.genre }}
         </b-col>
+        <b-col>
+          <b-button size="sm" @click="goToMovie( doc.meta.id)">View</b-button>
+        </b-col>           
         <b-col class="text-right">
         {{ doc.fields.rating }}
         </b-col>
@@ -262,6 +265,10 @@ export default {
       }
     },
     
+    goToMovie(id) {
+      this.$router.push({ name: 'MovieForm', params: { id: id }});
+    },  
+
     changePage(page) {
       this.searchOffset = page;
       this.search(); 
