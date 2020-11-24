@@ -59,7 +59,90 @@ export const SearchClient = {
         let url = `${restServer}/api/1.0/movies/group_by/${field}`;
         console.log(`Calling (${server}) : ${url}`);
         return axios.get(url);
-    }
+    },
+
+    async getMovie(server, id) {
+        let restServer = nodeRestApiServer;  
+
+        if (server) {
+            if (server.toLowerCase() == "java") {
+                restServer = javaRestApiServer
+            } else if (server.toLowerCase() == "node") {
+                restServer = nodeRestApiServer
+            } if (server.toLowerCase() == "python") {
+                restServer = pythonRestApiServer
+            }
+        }
+
+        let url = `${restServer}/api/1.0/movies/${id}`;
+        console.log(`Calling (${server}) : ${url}`);
+        return axios.get(url);
+    },
  
+    async updateMovie(server, id, movie) {
+        let restServer = nodeRestApiServer;  
+        if (server) {
+            if (server.toLowerCase() == "java") {
+                restServer = javaRestApiServer
+            } else if (server.toLowerCase() == "node") {
+                restServer = nodeRestApiServer
+            } if (server.toLowerCase() == "python") {
+                restServer = pythonRestApiServer
+            }
+        }
+        let url = `${restServer}/api/1.0/movies/${id}`;
+        return axios.post(url, movie);
+    },
+
+    async getMovieComment(server, movieId) {
+        let restServer = nodeRestApiServer;  
+        if (server) {
+            if (server.toLowerCase() == "java") {
+                restServer = javaRestApiServer
+            } else if (server.toLowerCase() == "node") {
+                restServer = nodeRestApiServer
+            } if (server.toLowerCase() == "python") {
+                restServer = pythonRestApiServer
+            }
+        }
+        let url = `${restServer}/api/1.0/movies/${movieId}/comments`;
+        console.log(`Calling ${url}`);
+        return axios.get(url);
+    },
+
+    async saveNewComment(server, movieId, comment) {
+        let restServer = nodeRestApiServer;  
+        if (server) {
+            if (server.toLowerCase() == "java") {
+                restServer = javaRestApiServer
+            } else if (server.toLowerCase() == "node") {
+                restServer = nodeRestApiServer
+            } if (server.toLowerCase() == "python") {
+                restServer = pythonRestApiServer
+            }
+        }
+        let url = `${restServer}/api/1.0/movies/${movieId}/comments`;
+        console.log(`Calling POST ${url}`);
+        return axios.post(url, comment);
+    },
+
+    async deleteCommentById(server, commentId) {
+        let restServer = nodeRestApiServer;  
+        if (server) {
+            if (server.toLowerCase() == "java") {
+                restServer = javaRestApiServer
+            } else if (server.toLowerCase() == "node") {
+                restServer = nodeRestApiServer
+            } if (server.toLowerCase() == "python") {
+                restServer = pythonRestApiServer
+            }
+        }
+        let url = `${restServer}/api/1.0/comments/${commentId}`;
+        console.log(`Calling DELETE ${url}`);
+        return axios.delete(url);        
+     },
+
+    
+
 
 }

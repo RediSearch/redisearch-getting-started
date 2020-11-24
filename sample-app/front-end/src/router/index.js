@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Search from '../views/Search.vue'
 import FacetedSearch from '../views/FacetedSearch.vue'
+import Home from '../views/Home.vue'
+import MovieForm from '../views/MovieForm.vue'
 
 Vue.use(VueRouter)
 
@@ -9,7 +11,7 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Search
+    component: Home
   },
   {
     path: '/search',
@@ -20,6 +22,11 @@ Vue.use(VueRouter)
     path: '/faceted-search',
     name: 'FacetedSearch',
     component: FacetedSearch
+  },
+  {
+    path: '/movies/:id',
+    name: 'MovieForm',
+    component: MovieForm
   }
   ]
 

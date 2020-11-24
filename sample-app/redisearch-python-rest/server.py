@@ -93,6 +93,26 @@ def get_movie_group_by(field):
 
     return  dictResult;
 
+@app.route('/api/1.0/movies/<movie_id>',  methods = ['POST', 'GET'])
+def get_movie_by_id(movie_id):
+    dictResult = {
+        "messsage" : "This movie endpoint is not implemented in Java, use the Node.js Endpoint"
+    };
+    return  dictResult, 501;
+
+@app.route('/api/1.0/movies/<movie_id>/comments', methods = ['POST', 'GET'])
+def get_movie_comments(movie_id):
+    dictResult = {
+        "messsage" : "Comment API not implemented in Python, use the Node.js Endpoint"
+    };
+    return  dictResult, 501;
+
+@app.route('/api/1.0/comments/<movie_id>', methods = ['DELETE', 'GET'])
+def get_comment(movie_id):
+    dictResult = {
+        "messsage" : "Comment API not implemented in Python, use the Node.js Endpoint"
+    };
+    return  dictResult, 501;
 
 def docs_to_dict(docs):
     reslist = []

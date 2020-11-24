@@ -106,6 +106,9 @@
         <b-col>
         {{ doc.fields.genre }}
         </b-col>
+        <b-col>
+          <b-button size="sm" @click="goToMovie( doc.meta.id)">View</b-button>
+        </b-col>        
         <b-col class="text-right">
         {{ doc.fields.rating }}
         </b-col>
@@ -203,15 +206,21 @@ export default {
         this.perPage = this.searchResult.meta.limit;
       }
     },
+
     changePage(page) {
       this.searchOffset = page;
       this.search(); 
     },
+
     selectSampleQuery(value) {
       this.searchQuery = value;
       this.searchOffset = 0; 
       this.search();
-    }
+    },
+
+    goToMovie(id) {
+      this.$router.push({ name: 'MovieForm', params: { id: id }});
+    },    
   },
 
 }
