@@ -2,4 +2,4 @@ redis==3.5.3
 redisearch==1.0.0
 Flask==1.1.2
 python-dotenv==0.14.0
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
