@@ -2,11 +2,13 @@ from flask import Flask, request, g
 import os
 from flask_cors import CORS
 
-from redisearch import *
-import redisearch.aggregation as aggregations
-import redisearch.reducers as reducers
-
 import redis
+from redis.commands.search import reducers
+from redis.commands.search.field import TextField, TagField, NumericField
+from redis.commands.search.indexDefinition import IndexDefinition, IndexType
+from redis.commands.search.query import NumericFilter, Query
+import redis.commands.search.aggregation as aggregations
+
 
 server_port = os.getenv("SERVER_PORT", "8087");
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379");
@@ -17,15 +19,15 @@ CORS(app)
 
 
 @app.before_request
-def before_request():
-
-    print("Configuration Index: "+redis_index+" - redisUrl: "+redis_url);
-
-    g.redis = redis.from_url(redis_url);
-    g.movieIdx = Client(
-        redis_index,
-        conn=g.redis
-    );
+# def before_request():
+#
+#     print("Configuration Index: "+redis_index+" - redisUrl: "+redis_url);
+#
+#     g.redis = redis.from_url(redis_url);
+#     g.movieIdx = Client(
+#         redis_index,
+#         conn=g.redis
+#     );
 
 
 @app.route('/')
