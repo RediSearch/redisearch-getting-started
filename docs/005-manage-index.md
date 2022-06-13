@@ -31,7 +31,7 @@ The `FT._LIST` command provides a list of all RediSearch indexes in your databas
 
 ### Updating your Indexing
 
-As you are build your application and add more information to the database you may need to add new fields to the index. The `FT.ALTER` command enables you to do this.
+As you build your application and add more information to the database you may need to add new fields to the index. The `FT.ALTER` command enables you to do this.
 
 ```
 > FT.ALTER idx:movie SCHEMA ADD plot TEXT WEIGHT 0.5
