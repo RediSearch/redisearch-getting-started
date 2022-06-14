@@ -28,7 +28,6 @@ services:
         depends_on:
             - redisearch    
             
-
     rest-java:
         build:
             context: ./redisearch-jedis-rest
@@ -70,7 +69,8 @@ services:
         ports:
             - "8087:8087" 
         environment:
-            - REDIS_URL=redis://redisearch:6379
+            - REDIS_SERVER=redisearch
+            - REDIS_PORT=6379
             - REDIS_INDEX=idx:movie
         networks:
             - redisearch-gettingstarted

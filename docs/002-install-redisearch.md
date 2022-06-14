@@ -5,7 +5,7 @@ You have multiple ways to run RediSearch:
 * building from [sources](https://github.com/RediSearch/RediSearch) and installing it inside an existing Redis Instance
 * using [Redis Cloud](https://redislabs.com/redis-enterprise-cloud/) _(when RediSearch module 2.0 available)_
 * using [Redis Enterprise](https://redislabs.com/redis-enterprise-software/) _(when RediSearch module 2.0 available)_
-* using [Docker](https://hub.docker.com/r/redislabs/redisearch/)
+* using [Docker](https://hub.docker.com/r/redis/redis-stack)
 
 Let's use Docker for now.
 
@@ -13,9 +13,9 @@ Let's use Docker for now.
 
 
 ```
-> docker run -it --rm --name redis-search-2 \
+> docker run -it --rm --name redis-stack \
    -p 6379:6379 \
-   redislabs/redisearch:2.0.2
+   redis/redis-stack:latest
 ```
 
 *Note: The container will automatically be removed when it exits (`--rm` parameter).*
