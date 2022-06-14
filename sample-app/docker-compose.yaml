@@ -13,7 +13,7 @@ services:
             - ./redisearch-docker/dataset:/dataset
             - ./redis:/data`
             
-    # Start RediSearch to run load script
+    # Start redis-stack to run load script and exit 
     redisearch2:
         image:  redis/redis-stack:latest
         container_name: redisearch2
