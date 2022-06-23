@@ -63,21 +63,11 @@ const SearchService = function () {
       raw: [] // Used to return the raw response from Node Redis.
     };
 
-    // TODO Remove this...
-    const pipeline = [
-      indexNameMovies,      // name of the index
-      '*',            // query string,
-      'GROUPBY', '1', `@${field}`, // group by
-      'REDUCE', 'COUNT', '0', 'AS', 'nb_of_movies', //count the number of movies by group
-      'SORTBY', '2', `@${field}`, 'ASC', // sorted by the genre
-      'LIMIT', '0', '1000'  // get all genre expecting less than 100 genres
-    ];
-
     const aggrResult = await client.ft.aggregate(indexNameMovies, '*', {
       STEPS: [
         {
           type: AggregateSteps.GROUPBY,
-          properties: field,
+          properties: `@${field}`,
           REDUCE: [
             { 
               type: 'COUNT',
@@ -87,8 +77,10 @@ const SearchService = function () {
         },
         {
           type: AggregateSteps.SORTBY,
-          BY: field,
-          DIRECTION: 'ASC' // TODO This is not being passed to the FT.AGGREGATE command right now?
+          BY: {
+            BY: `@${field}`,
+            DIRECTION: 'ASC'
+          }
         },
         {
           type: AggregateSteps.LIMIT,
