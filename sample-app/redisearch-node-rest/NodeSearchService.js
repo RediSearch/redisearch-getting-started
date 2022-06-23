@@ -57,12 +57,6 @@ const SearchService = function () {
   }
 
   const _getMovieGroupBy = async function (field) {
-    const retValue = {
-      totalResults: 0,
-      rows: [],
-      raw: [] // Used to return the raw response from Node Redis.
-    };
-
     const aggrResult = await client.ft.aggregate(indexNameMovies, '*', {
       STEPS: [
         {
@@ -91,31 +85,12 @@ const SearchService = function () {
     });
 
     console.log(aggrResult);
-    // TODO transformations...
 
-    // client.ft_aggregate(
-    //   pipeline,
-    //   function (err, aggrResult) {
-
-    //     // transform array into document
-    //     // this should be added to a generic function
-    //     // ideally into the library itself
-    //     retValue.totalResults = aggrResult[0];
-
-    //     // loop on the results starting at element 1
-    //     for (let i = 1; i <= aggrResult.length - 1; i++) {
-    //       const item = aggrResult[i];
-    //       const doc = {};
-    //       for (let j = 0, len = item.length; j < len; j++) {
-    //         doc[item[j]] = item[j + 1];
-    //         doc[item[j + 2]] = item[j + 3];
-    //         j = j + 3;
-    //       }
-    //       retValue.rows.push(doc);
-    //     }
-    //     retValue.raw = aggrResult;
-    //     callback(err, retValue);
-    //   });
+    return {
+      totalResults: aggrResult.total,
+      rows: aggrResult.results,
+      raw: aggrResult.results
+    };
   }
 
   const _getMovie = async function (id) {
