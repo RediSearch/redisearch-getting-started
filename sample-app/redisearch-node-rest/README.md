@@ -1,101 +1,60 @@
-# RediSearch: Node.js Sample
+# RediSearch: Node.js Sample Application
 
+## Install Dependencies
 
+This application is built with [Express](https://www.npmjs.com/package/express) and [Node Redis](https://www.npmjs.com/package/redis).  Install these dependencies as follows:
 
-
-## Coding the application
-
-#### 1- Create the Project
-
-Follow the `npm` steps
-
-```
-$ npm init
+```bash
+$ npm install
 ```
 
-#### 2- Add Dependencies
+## Application Archictecture
 
-Add the dependencies:
+The REST API routes and Express server are defined and configured in `server.js`.  Each route makes calls to an instance of a search service that executes Redis/RediSearch commands and formats the responses into JSON objects.  The code for this is contained in `NodeSearchService.js`.
 
-* [Express](https://www.npmjs.com/package/express)
-* [Node RediSearch](https://www.npmjs.com/package/redis-redisearch)
+## Running the application in Docker
 
-```
-$ npm install express redis redis-redisearch --save 
-```
+You can build and run the application with Docker using the following commands:
 
+### Build
 
-#### 3- Create REST API Routes
-
-Create the `server.js` file and add the following code 
-
-```js
-const express = require('express')
-const app = express()
-const port = 3003
-
-
-app.get('/api/1.0/', (req, res) => {
-    res.json({"status" : "started"});
-  })
-  
-
-app.get('/', (req, res) => {
-  res.send('RediSearch Node REST Server Started')
-})
-
-app.listen(port, () => {
-  console.log(`RediSearch Node listening at http://localhost:${port}`)
-})
-
-```
-
-This will be the base of the various API endpoints.
-
-
-#### 4- Create a NodeSearchService
-
-In this sample application all the RediSearch interactions will be done in `NodeSearchService.js` file.
-
-
-### Running the application in Docker
-
-You can run build and run the application from docker using the following commands:
-
-**Build**
-
-```shell script
-
-> docker build -t redis/search-backend-node  . 
-
+```bash
+$ docker build -t redis/search-backend-node . 
 ```
 
 This command will create a new image and build the Node.js project into it.
 
-**Run**
+### Run
 
-```shell script
-> docker run --rm  \
+```bash
+$ docker run --rm  \
      --env "REDIS_URL=redis://host.docker.internal:6379" \
      --env "REDIS_INDEX=idx:movie" \
      --name "redisearch-backend-node"\
      -p 8086:8086 redis/search-backend-node
 ```
 
-### Running the application locally
+## Running the Application Locally
 
 To run the application on your local machine:
 
-```shell script
-> npm install
-> npm start
+```bash
+$ npm start
+```
+
+Use this command to run the application using [nodemon](https://www.npmjs.com/package/nodemon) so that the server is automatically restarted for you if you make code changes:
+
+```bash
+$ npm run dev
 ```
 
 ### Accessing the API
 
-You can now access the REST Search service using the following URL:
+You can now access the REST Search service using the following example URLs:
 
-* http://localhost:8086/api/1.0/movies/search?q=man&limit=10&offset=20
+* Movies matching "star" ordered by year of release with most recent first: http://localhost:8086/api/1.0/movies/search?q=star&sortby=release_year&ascending=false
+* Details for movie with ID 293 (The Empire Strikes Back): http://localhost:8086/api/1.0/movies/293
+* Aggregate query for movies by genre: http://localhost:8086/api/1.0/movies/group_by/genre
 
 
 
