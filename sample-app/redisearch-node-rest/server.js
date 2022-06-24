@@ -24,7 +24,7 @@ app.get('/api/1.0/movies/search', async (req, res) => {
 
   if (sortBy) {
     options.sortBy = sortBy;
-    options.ascending = true; // if sorted by default it is ascending
+    options.ascending = true; // Default to sort ascending.
   }
 
   if (ascending) {

@@ -101,6 +101,7 @@ const SearchService = function () {
       id = `movie:${id}`;
     }
 
+    // Using HGETALL, since the hash size is limited.
     const movie = await client.hGetAll(id);
 
     return movie.ibmdb_id ? movie : {
@@ -115,9 +116,6 @@ const SearchService = function () {
     };
   }
 
-  /**
-   * Update a movie.
-   */
   const _saveMovie = async function (id, movie) {
     // If id does not start with `movie:` add it.
     if (!id.startsWith('movie:')) {
@@ -210,15 +208,12 @@ const SearchService = function () {
     };
   }
 
-  /**
-   * Delete a comment.
-   */
   const _deleteComment = async function (commentId) {
     return await client.del(commentId);
   }
 
   const _getCommentById = async function (commentId) {
-    // Using hgetall, since the hash size is limited.
+    // Using HGETALL, since the hash size is limited.
     return await client.hGetAll(commentId);
   }
 
