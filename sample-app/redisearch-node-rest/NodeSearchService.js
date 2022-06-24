@@ -160,12 +160,19 @@ const SearchService = function () {
 
     const docs = [];
     for (const searchResult of searchResults.documents) {
+      // To make it easier let's format the timestamp
+      const date = new Date(parseInt(searchResult.value.timestamp));
+      const dateAsString = `${date.toDateString()} - ${date.toLocaleTimeString()}`;
+
       docs.push({
         meta: {
           id: searchResult.id,
           score: 0 // Node Redis 4 does not yet support WITHSCORES in FT.SEARCH
         },
-        fields: searchResult.value
+        fields: {
+          ...searchResult.value,
+          dateAsString
+        }
       });
     }
 
