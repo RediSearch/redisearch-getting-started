@@ -6,7 +6,9 @@ const indexNameComments = process.env.REDIS_INDEX_COMMENTS || 'idx:comments:movi
 
 console.log(`Configuration Index: ${indexNameMovies} - redisUrl: ${redisUrl}`);
 
-const client = createClient(redisUrl);
+const client = createClient({
+  url: redisUrl
+});
 await client.connect();
 
 const SearchService = function () {
