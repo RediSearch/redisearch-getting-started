@@ -1,12 +1,6 @@
 # RediSearch: Node.js Sample Application
 
-## Install Dependencies
-
-This application is built with [Express](https://www.npmjs.com/package/express) and [Node Redis](https://www.npmjs.com/package/redis).  Install these dependencies as follows:
-
-```bash
-$ npm install
-```
+This application requires [Node.js](https://nodejs.org/) 14.8.0 or higher to run.
 
 ## Application Archictecture
 
@@ -14,7 +8,7 @@ The REST API routes and Express server are defined and configured in `server.js`
 
 ## Running the application in Docker
 
-You can build and run the application with Docker using the following commands:
+You can build and run the application with Docker using the following commands.
 
 ### Build
 
@@ -22,7 +16,7 @@ You can build and run the application with Docker using the following commands:
 $ docker build -t redis/search-backend-node . 
 ```
 
-This command will create a new image and build the Node.js project into it.
+This command creates a new image and builds the Node.js project into it.
 
 ### Run
 
@@ -34,9 +28,17 @@ $ docker run --rm  \
      -p 8086:8086 redis/search-backend-node
 ```
 
+This command runs the container and starts the application, which will listen on port 8086.  
+
 ## Running the Application Locally
 
-To run the application on your local machine:
+This application is built with [Express](https://www.npmjs.com/package/express) and [Node Redis](https://www.npmjs.com/package/redis).  Install these dependencies as follows:
+
+```bash
+$ npm install
+```
+
+Then start the application:
 
 ```bash
 $ npm start
