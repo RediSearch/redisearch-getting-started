@@ -42,7 +42,7 @@ app.post('/api/1.0/movies/:id', async (req, res) => res.json(await searchService
 
 app.get('/api/1.0/movies/:id/comments', async (req, res) => res.json(await searchService.getComments(req.params.id, {})));
 
-app.post('/api/1.0/movies/:id/comments', async (req, res) => res.json(await searchService.saveComment(req.params.id)));
+app.post('/api/1.0/movies/:id/comments', async (req, res) => res.json(await searchService.saveComment(req.params.id, req.body)));
 
 app.get('/api/1.0/comments/:id', async (req, res) => res.json(await searchService.getCommentById(req.params.id)));
 
