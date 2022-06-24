@@ -38,7 +38,7 @@ const SearchService = function () {
       docs.push({
         meta: {
           id: searchResult.id,
-          score: 'TODO' // Node Redis 4 does not yet support WITHSCORES in FT.SEARCH
+          score: 0 // Node Redis 4 does not yet support WITHSCORES in FT.SEARCH
         },
         fields: searchResult.value
       });
@@ -163,7 +163,7 @@ const SearchService = function () {
       docs.push({
         meta: {
           id: searchResult.id,
-          score: 'TODO' // Node Redis 4 does not yet support WITHSCORES in FT.SEARCH
+          score: 0 // Node Redis 4 does not yet support WITHSCORES in FT.SEARCH
         },
         fields: searchResult.value
       });
