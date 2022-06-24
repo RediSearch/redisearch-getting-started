@@ -134,7 +134,7 @@ const SearchService = function () {
 
     const queryString = `@movie_id:{${movieId}}`;
     const searchOptions = {
-      WITHSCORES: true,  // Node Redis 4 does not yet support WITHSCORES in FT.SEARCH
+      WITHSCORES: true,  // Node Redis 4 does not yet support WITHSCORES in FT.SEARCH.
       LIMIT: {
         from: options.offset || 0,
         size: options.limit || 10
@@ -160,14 +160,14 @@ const SearchService = function () {
 
     const docs = [];
     for (const searchResult of searchResults.documents) {
-      // To make it easier let's format the timestamp
+      // To make it easier let's format the timestamp.
       const date = new Date(parseInt(searchResult.value.timestamp));
       const dateAsString = `${date.toDateString()} - ${date.toLocaleTimeString()}`;
 
       docs.push({
         meta: {
           id: searchResult.id,
-          score: 0 // Node Redis 4 does not yet support WITHSCORES in FT.SEARCH
+          score: 0 // Node Redis 4 does not yet support WITHSCORES in FT.SEARCH.
         },
         fields: {
           ...searchResult.value,
