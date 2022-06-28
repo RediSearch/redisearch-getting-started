@@ -1,3 +1,5 @@
+import sys
+
 from flask import Flask, request, json, jsonify
 from flask_cors import CORS
 
@@ -7,44 +9,25 @@ from redis.commands.search import reducers
 from redis.commands.search.query import NumericFilter, Query
 import redis.commands.search.aggregation as aggregations
 
-redis_password = ""
-if environ.get('REDIS_SERVER') is not None:
-    redis_server = environ.get('REDIS_SERVER')
-    print("passed in redis server is " + redis_server)
-else:
-    redis_server = 'localhost'
-    print("no passed in redis server variable ")
+redis_server = environ.get('REDIS_SERVER', "localhost")
+sys.stdout.write("redis server set to " + redis_server)
 
-if environ.get('REDIS_PORT') is not None:
-    redis_port = int(environ.get('REDIS_PORT'))
-    print("passed in redis port is " + str(redis_port))
-else:
-    redis_port = 6379
-    print("no passed in redis port variable ")
+redis_port = int(environ.get('REDIS_PORT', "6379"))
+sys.stdout.write("redis port is " + str(redis_port))
 
-if environ.get('SERVER_PORT') is not None:
-    server_port = int(environ.get('SERVER_PORT'))
-    print("passed in redis port is " + str(server_port))
-else:
-    server_port = 8087
-    print("no passed in redis port variable ")
+server_port = int(environ.get('SERVER_PORT', "8087"))
+sys.stdout.write("server port is " + str(server_port))
 
-if environ.get('REDIS_INDEX') is not None:
-    redis_index = environ.get('REDIS_INDEX')
-    print("passed in category file location " + redis_index)
-else:
-    redis_index = "idx:movie"
-    print("no passed in redis index using idx:movie")
+redis_index = environ.get('REDIS_INDEX', "idx:movie")
+sys.stdout.write("redis index is " + redis_index)
 
-if environ.get('REDIS_PASSWORD') is not None:
-    redis_password = environ.get('REDIS_PASSWORD')
-    print("passed in redis password is " + redis_password)
+redis_password = environ.get('REDIS_PASSWORD', "")
 
 # conn = redis.StrictRedis(redis_server, redis_port)
 if redis_password is not None:
-    conn = redis.StrictRedis(redis_server, redis_port, password=redis_password, charset="utf-8", decode_responses=True)
+    conn = redis.Redis(redis_server, redis_port, password=redis_password, charset="utf-8", decode_responses=True)
 else:
-    conn = redis.StrictRedis(redis_server, redis_port, charset="utf-8", decode_responses=True)
+    conn = redis.Redis(redis_server, redis_port, charset="utf-8", decode_responses=True)
 
 app = Flask(__name__)
 CORS(app)
@@ -58,7 +41,6 @@ CORS(app)
 
 @app.route('/api/1.0/movies/search')
 def search():
-    print("calling search")
     offset = 0;
     limit = 10;
     queryString = "";
@@ -71,7 +53,6 @@ def search():
 
     if (request.args.get('q')):
         queryString = request.args.get('q');
-    print("query string is " + queryString)
     q = Query(queryString).with_scores().paging(offset, limit);
     if (request.args.get('sortby')):
         ascending = True;
@@ -96,7 +77,6 @@ def search():
 
 @app.route('/api/1.0/movies/group_by/<field>')
 def get_movie_group_by(field):
-    print("groupby field " + field)
     req = aggregations.AggregateRequest("*").group_by(
         "@" + field,
         reducers.count().alias("nb_of_movies")
@@ -107,7 +87,6 @@ def get_movie_group_by(field):
     reslist = []
     for i in range(0, len(res.rows)-1):
        results = res.rows[i]
-       # print(results)
        interim_results = json.dumps(results)
        final_results = json.loads(interim_results)
        reslist.append(final_results);
