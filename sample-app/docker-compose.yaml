@@ -1,12 +1,13 @@
-version: '3.9'
+version: '3.10'
 services:
 
     # Start RediSearch 
-    redisearch:
+    redis-stack:
         image:  redis/redis-stack:latest
-        container_name: redisearch
+        container_name: redis-stack
         ports:
             - "6379:6379" 
+            - "8001:8001" 
         networks:
             - redisearch-gettingstarted
         volumes:
@@ -14,9 +15,9 @@ services:
             - ./redis:/data`
             
     # Start redis-stack to run load script and exit 
-    redisearch2:
+    redis-stack-2:
         image:  redis/redis-stack:latest
-        container_name: redisearch2
+        container_name: redis-stack-2
         ports:
             - "6380:6379" 
         networks:
@@ -26,7 +27,7 @@ services:
         command:
             [ "sh", "./dataset/import-data.sh" ]
         depends_on:
-            - redisearch    
+            - redis-stack    
             
     rest-java:
         build:
@@ -36,13 +37,13 @@ services:
         ports:
             - "8085:8085" 
         environment:
-            - REDIS_URL=redis://redisearch:6379
+            - REDIS_URL=redis://redis-stack:6379
             - REDIS_INDEX=idx:movie
         networks:
             - redisearch-gettingstarted
         restart: always
         depends_on:
-            - redisearch    
+            - redis-stack    
 
     rest-node:
         build:
@@ -52,13 +53,13 @@ services:
         ports:
             - "8086:8086" 
         environment:
-            - REDIS_URL=redis://redisearch:6379
+            - REDIS_URL=redis://redis-stack:6379
             - REDIS_INDEX=idx:movie
         networks:
             - redisearch-gettingstarted
         restart: always
         depends_on:
-            - redisearch   
+            - redis-stack   
 
 
     rest-python:
@@ -69,14 +70,14 @@ services:
         ports:
             - "8087:8087" 
         environment:
-            - REDIS_SERVER=redisearch
+            - REDIS_SERVER=redis-stack
             - REDIS_PORT=6379
             - REDIS_INDEX=idx:movie
         networks:
             - redisearch-gettingstarted
         restart: always
         depends_on:
-            - redisearch  
+            - redis-stack  
 
     search-frontend:
         build:
@@ -93,7 +94,7 @@ services:
             - redisearch-gettingstarted
         restart: always
         depends_on:
-            - redisearch  
+            - redis-stack  
             - rest-java
             - rest-node
             - rest-python
