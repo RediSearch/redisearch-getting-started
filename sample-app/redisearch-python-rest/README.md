@@ -20,7 +20,7 @@ This command will create a new image and build the maven project into it.
 
 ```shell script
 > docker run --rm  \
-     --env "REDIS_URL=redis://host.docker.internal:6379" \
+     --env "REDIS_URL=redis://redis-stack:6379" \
      --env "REDIS_INDEX=idx:movie" \
      --name "redisearch-backend-python"\
      -p 8087:8087 redis/search-backend-python
@@ -28,5 +28,5 @@ This command will create a new image and build the maven project into it.
 
 You can now access the REST Search service using the following URL:
 
-* http://localhost:8087/api/1.0/search?q=man&limit=10&offset=20
+* http://localhost:8087/api/1.0/movies/search?q=man&limit=10&offset=20
 

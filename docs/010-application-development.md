@@ -40,9 +40,10 @@ To run the application:
 
 This Docker Compose will start:
 
-1. RediSearch instance on port 6380, and import all movies, actors and create indexes
+1. A Redis Stack container on port 6379.  The redis-cli can be used with this container once the ports are exposed
 1. The Java, Node and Python REST Services available on port 8085, 8086, 8087
 1. The frontend on port 8084
+1. A second RediStack container will start on port 6380 just to load the sample data to the redis stack instance running on port 6379.  This container exits once the sample data has been loaded to the 6379 container
 
 Once started you can access the application and its services using the following URLs:
 

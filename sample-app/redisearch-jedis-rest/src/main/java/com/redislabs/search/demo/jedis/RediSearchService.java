@@ -1,25 +1,25 @@
 package com.redislabs.search.demo.jedis;
 
-import com.redislabs.search.demo.jedis.util.RediSearchCommands;
-import io.redisearch.AggregationResult;
-import io.redisearch.Document;
-import io.redisearch.Query;
-import io.redisearch.SearchResult;
-import io.redisearch.aggregation.AggregationBuilder;
-import io.redisearch.aggregation.SortedField;
-import io.redisearch.aggregation.reducers.Reducers;
-import io.redisearch.client.Client;
+import redis.clients.jedis.*;
+
+import redis.clients.jedis.search.*;
+import redis.clients.jedis.search.SearchResult;
+import redis.clients.jedis.search.aggr.AggregationBuilder;
+import redis.clients.jedis.search.aggr.AggregationResult;
+import redis.clients.jedis.search.aggr.Reducers;
+import redis.clients.jedis.search.aggr.SortedField;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 import javax.annotation.PostConstruct;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
+
+import static redis.clients.jedis.search.RediSearchCommands.*;
 
 @Slf4j
 @Service
@@ -28,8 +28,8 @@ public class RediSearchService {
     @Autowired
     private Environment env;
 
-    JedisPool jedisPool;
-    Client rediSearchClient;
+    JedisPooled  client;
+    // Client rediSearchClient;
 
     String indexName = "idx:movie"; // default name
     String redisUrl = "redis://localhost:6379"; // default name
@@ -44,8 +44,7 @@ public class RediSearchService {
 
         log.info("Configuration Index: "+indexName+" - redisUrl: "+redisUrl);
 
-        jedisPool = new JedisPool(new URI(redisUrl));
-        rediSearchClient = new Client(indexName, jedisPool);
+        client = new JedisPooled(new URI(redisUrl));
 
     }
 
@@ -73,13 +72,13 @@ public class RediSearchService {
         }
 
         // Execute the query
-        SearchResult queryResult = rediSearchClient.search(query);
+        SearchResult queryResult = client.ftSearch(indexName, query);
 
         // Adding the query string for information purpose
         resultMeta.put("queryString",queryString);
 
         // Get the total number of documents and other information for this query:
-        resultMeta.put("totalResults", queryResult.totalResults);
+        resultMeta.put("totalResults", queryResult.getTotalResults());
         resultMeta.put("offset", offset);
         resultMeta.put("limit", limit);
 
@@ -90,12 +89,13 @@ public class RediSearchService {
         // the `raw_docs` is used to view the structure
         // the `docs` will contain the list of document that is more developer friendly
         //      capture in  https://github.com/RediSearch/JRediSearch/issues/121
-        returnValue.put("raw_docs", queryResult.docs);
+        // returnValue.put("raw_docs", queryResult.docs);
+        returnValue.put("raw_docs", queryResult.getDocuments());
 
 
         // remove the properties array and create attributes
         List<Map<String, Object>> docsToReturn = new ArrayList<>();
-        List<Document> docs =  queryResult.docs;
+        List<Document> docs =  queryResult.getDocuments();
 
         for (Document doc :docs) {
 
@@ -132,7 +132,7 @@ public class RediSearchService {
                 .sortBy( SortedField.asc("@"+groupByField))
                 .limit(0,1000); // get all rows
 
-        AggregationResult aggrResult = rediSearchClient.aggregate(aggregation);
+        AggregationResult aggrResult = client.ftAggregate(indexName, aggregation);
         int resultSize = aggrResult.getResults().size();
 
         List<Map<String, Object>> docsToReturn = new ArrayList<>();
@@ -157,9 +157,6 @@ public class RediSearchService {
         Map<String,Object> returnValue = new HashMap<>();
         Map<String,Object> resultMeta = new HashMap<>();
 
-        // get the connection from the pool, and release the connection after the query
-        try (Jedis jedis = jedisPool.getResource()) {
-
             // Create list of parameter for the FT.SEARCH command
             List<String> commandParams = new ArrayList<>(); // TODO move to List.of when moving to new JDK
             commandParams.add(indexName);
@@ -181,8 +178,8 @@ public class RediSearchService {
 
             log.info(commandParams.toString());
 
-            List result = (ArrayList)jedis.sendCommand(
-                    RediSearchCommands.Command.SEARCH,
+            List result = (ArrayList)client.sendCommand(
+                    com.redislabs.search.demo.jedis.util.RediSearchCommands.Command.SEARCH,
                     commandParams.toArray(new String[0]));
 
             // The result of the command:
@@ -264,11 +261,6 @@ public class RediSearchService {
 
             returnValue.put("meta", resultMeta);
             returnValue.put("docs", docList);
-
-
-
-        }
-
 
         return returnValue;
     }

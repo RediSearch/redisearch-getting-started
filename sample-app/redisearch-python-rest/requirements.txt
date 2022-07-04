@@ -1,5 +1,4 @@
-redis==3.5.3
-redisearch==1.0.0
-Flask==1.1.2
-python-dotenv==0.14.0
-Flask-Cors==3.0.8
+redis>=4.3.3
+Flask>=2.1.2
+python-dotenv==0.20.0
+Flask-Cors>=3.0.10
