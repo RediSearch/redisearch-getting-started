@@ -6,7 +6,7 @@ You can find the same REST Service that uses RediSearch developed with different
 
 * [RediSearch & Java : Jedis/JRediSearch](../../../tree/master/sample-app/redisearch-jedis-rest)
 
-* [Node.js : Node RediSearch](../../../tree/master/sample-app/redisearch-node-rest)
+* [Node.js : Node-Redis](../../../tree/master/sample-app/redisearch-node-rest)
 
 * [Python : Python RediSearch](../../../tree/master/sample-app/redisearch-python-rest)
 
