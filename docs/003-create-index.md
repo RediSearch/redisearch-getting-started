@@ -113,13 +113,13 @@ Create the index with the following command:
 
 Before running some queries let's look at the command in detail:
 
-* [`FT.CREATE`](https://oss.redislabs.com/redisearch/master/Commands/#ftcreate) : creates an index with the given spec. The index name will be used in all the key names so keep it short.
+* [`FT.CREATE`](https://redis.io/commands/ft.create/) : creates an index with the given spec. The index name will be used in all the key names so keep it short.
 * `idx:movie` : the name of the index
 * `ON hash` : the type of structure to be indexed. *Note that in RediSearch 2.0 only hash structures are supported, this parameter will accept other Redis data types in future as RediSearch is updated to index them* 
 * `PREFIX 1 "movie:"` : the prefix of the keys that should be indexed. This is a list, so since we want to only index movie:* keys the number is 1. Suppose you want to index movies and tv_show that have the same fields, you can use: `PREFIX 2 "movie:" "tv_show:"` 
-* `SCHEMA ...`: defines the schema, the fields and their type, to index, as you can see in the command, we are using [TEXT](https://oss.redislabs.com/redisearch/Query_Syntax/#a_few_query_examples), [NUMERIC](https://oss.redislabs.com/redisearch/Query_Syntax/#numeric_filters_in_query) and [TAG](https://oss.redislabs.com/redisearch/Query_Syntax/#tag_filters), and [SORTABLE](https://oss.redislabs.com/redisearch/Sorting/) parameters.
+* `SCHEMA ...`: defines the schema, the fields and their type, to index, as you can see in the command, we are using [TEXT](https://redis.io/docs/stack/search/reference/query_syntax/#a-few-query-examples), [NUMERIC](https://redis.io/docs/stack/search/reference/query_syntax/#numeric-filters-in-query) and [TAG](https://redis.io/docs/stack/search/reference/tags/), and [SORTABLE](https://redis.io/docs/stack/search/reference/sorting) parameters.
 
-You can find information about the [FT.CREATE](https://oss.redislabs.com/redisearch/Commands/#ftcreate) command in the [documentation](https://oss.redislabs.com/redisearch/Commands/#ftcreate).
+You can find information about the `FT.CREATE` command in the [documentation](https://redis.io/commands/ft.create/).
 
 
 You can look at the index information with the following command:

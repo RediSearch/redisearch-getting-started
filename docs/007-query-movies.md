@@ -53,7 +53,7 @@ The first line contains the number of documents (`4`) that match the query condi
 
 This query is a "fieldless" condition, this means that the query engine has:
 * searched in all the TEXT fields of the index(`title` and `plot`)
-* for the word `heat` and related words, this is why the movie:736 is returned since it has the word `heated` in the plot ([stemming](https://oss.redislabs.com/redisearch/Stemming/))
+* for the word `heat` and related words, this is why the movie:736 is returned since it has the word `heated` in the plot ([stemming](https://redis.io/docs/stack/search/reference/stemming/))
 * returned the result sorted by score, remember that the title has a weight of 1.0, and the plot a weight of 0.5. So when the word or related words are found in the title the score is larger.
 ---
 </details>
@@ -145,7 +145,7 @@ As you have seen earlier the movie index contains:
 
 You saw earlier how to place a condition on a TEXT field.
 
-The [TAG](https://oss.redislabs.com/redisearch/Tags/) is a little bit different as the index engine does not do any stemming.
+The [TAG](https://redis.io/docs/stack/search/reference/tags/) is a little bit different as the index engine does not do any stemming.
 
 To set a condition on this field you must use the `@field:{value}` notation, the `{...}` indicates that it is a TAG condition
 
@@ -290,7 +290,7 @@ The FT.SEARCH command, by default, returns the first ten documents. You will see
 
 You can only use one SORTBY clause in an FT.SEARCH query, if you want to sort on multiple fields, for example sorting movies by `genre` ascending and `release_year` descending, you have to use an FT.AGGREGATE, this is covered in the [next section](008-aggregation.md).
 
-Note: The field used in the [SORTBY](https://oss.redislabs.com/redisearch/Sorting/#specifying_sortby) should be part of the index schema and defined as SORTABLE.
+Note: The field used in the [SORTBY](https://redis.io/docs/stack/search/reference/sorting/#specifying-sortby) should be part of the index schema and defined as SORTABLE.
 ---
 </details>
 

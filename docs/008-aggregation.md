@@ -135,9 +135,9 @@ Let's check out some examples.
 
 The `idx:user` index contains the last_login field. This field stores the last login time as an EPOC timestamp.
 
-RediSearch aggregation allows you to apply transformations to each record. This is done using the [APPLY](https://oss.redislabs.com/redisearch/Aggregations/#apply_expressions) parameter.
+RediSearch aggregation allows you to apply transformations to each record. This is done using the [APPLY](https://redis.io/docs/stack/search/reference/aggregations/#apply-expressions) parameter.
 
-For this example you have to use a [date/time](https://oss.redislabs.com/redisearch/Aggregations/#list_of_datetime_apply_functions) function to extract the month and year from the timestamp.
+For this example you have to use a [date/time](https://redis.io/docs/stack/search/reference/aggregations/#list-of-datetime-apply-functions) function to extract the month and year from the timestamp.
 
 ```
 > FT.AGGREGATE idx:user * APPLY year(@last_login) AS year APPLY "monthofyear(@last_login) + 1" AS month GROUPBY 2 @year @month REDUCE count 0 AS num_login SORTBY 4 @year ASC @month ASC
@@ -194,7 +194,7 @@ Using the date/time Apply functions it is possible to extract the day of the wee
 
 In the previous example you used the `query string` parameter to select all documents (`"*"`) or a subset of the documents (`"@gender:{female}"`)
 
-It is also possible to filter the results using a predicate expression relating to values in each result. This is applied post-query and relates to the current state of the pipeline. This is done using the [FILTER](https://oss.redislabs.com/redisearch/Aggregations/#filter_expressions) parameter. 
+It is also possible to filter the results using a predicate expression relating to values in each result. This is applied post-query and relates to the current state of the pipeline. This is done using the [FILTER](https://redis.io/docs/stack/search/reference/aggregations/#filter-expressions) parameter. 
 
 
 <details> 
