@@ -21,13 +21,13 @@ Add the dependencies:
 * [Node RediSearch](https://www.npmjs.com/package/redis-redisearch)
 
 ```
-$ npm install express redis redis-redisearch --save 
+$ npm install express redis redis-redisearch --save
 ```
 
 
 #### 3- Create REST API Routes
 
-Create the `server.js` file and add the following code 
+Create the `server.js` file and add the following code
 
 ```js
 const express = require('express')
@@ -38,7 +38,7 @@ const port = 3003
 app.get('/api/1.0/', (req, res) => {
     res.json({"status" : "started"});
   })
-  
+
 
 app.get('/', (req, res) => {
   res.send('RediSearch Node REST Server Started')
@@ -66,7 +66,7 @@ You can run build and run the application from docker using the following comman
 
 ```shell script
 
-> docker build -t redis/search-backend-node  . 
+> docker build -t redis/search-backend-node  .
 
 ```
 
@@ -79,7 +79,7 @@ This command will create a new image and build the Node.js project into it.
      --env "REDIS_URL=redis://host.docker.internal:6379" \
      --env "REDIS_INDEX=idx:movie" \
      --name "redisearch-backend-node"\
-     -p 8086:8086 redis/search-backend-node
+     -p 8086:8086 redis/redis-stack:latest
 ```
 
 ### Running the application locally

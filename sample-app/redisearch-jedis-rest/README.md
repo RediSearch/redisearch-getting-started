@@ -18,7 +18,7 @@ You can run build and run the application from docker using the following comman
 
 ```shell script
 
-> docker build -t redis/search-backend-java  . 
+> docker build -t redis/search-backend-java  .
 
 ```
 
@@ -31,7 +31,7 @@ This command will create a new image and build the maven project into it.
      --env "REDIS_URL=redis://redis-stack:6379" \
      --env "REDIS_INDEX=idx:movie" \
      --name "redisearch-backend-java"\
-     -p 8085:8085 redis/search-backend-java
+     -p 8085:8085 redis/redis-stack:latest
 ```
 
 You can now access the REST Search service using the following URL:
