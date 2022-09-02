@@ -26,7 +26,7 @@ The database contains a few movies, and an index, it is now possible to execute 
 
 The FT.SEARCH commands returns a list of results starting with the number of results, then the list of elements (keys & fields).
 
-As you can see the movie *Star Wars: Episode V - The Empire Strikes Back* is found, even though you used only the word “war” to match “Wars” in the title. This is because the title has been indexed as text, so the field is [tokenized](https://oss.redislabs.com/redisearch/Escaping/) and [stemmed](https://oss.redislabs.com/redisearch/Stemming/).
+As you can see the movie *Star Wars: Episode V - The Empire Strikes Back* is found, even though you used only the word “war” to match “Wars” in the title. This is because the title has been indexed as text, so the field is [tokenized](https://redis.io/docs/stack/search/reference/escaping/) and [stemmed](https://redis.io/docs/stack/search/reference/stemming/).
 
 Later when looking at the query syntax in more detail you will learn more about the search capabilities.
 
@@ -75,7 +75,7 @@ Adding the string `-jedi` (minus) will ask the query engine not to return values
 ---
 **Example : *All the movies that contains the string "`gdfather` using fuzzy search"***
 
-As you can see the word godfather contains a speelling error, it can however be matched using [fuzzy matching](https://oss.redislabs.com/redisearch/Query_Syntax/#fuzzy_matching). Fuzzy matches are performed based on [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) (LD).
+As you can see the word godfather contains a speelling error, it can however be matched using [fuzzy matching](https://redis.io/docs/stack/search/reference/query_syntax/#fuzzy-matching). Fuzzy matches are performed based on [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) (LD).
 
 ```
 > FT.SEARCH idx:movie " %gdfather% " RETURN 2 title release_year
@@ -131,7 +131,7 @@ The syntax to query a TAG field is  @field_name:{value}
    4) "1980"
 ```
 
-You can find more information about the Tag filters in [the documentation](https://oss.redislabs.com/redisearch/master/Query_Syntax/#tag_filters).
+You can find more information about the Tag filters in [the documentation](https://redis.io/docs/stack/search/reference/query_syntax/#tag-filters).
 
 ---
 **Example : *All `Thriller` or `Action` movies that does not have `Jedi` in the title"***
@@ -273,8 +273,8 @@ You can run the following query, and you will that the document expires after 20
 ##  More
 You have many additional features regarding indexing and searching that you can find in the documentation:
 
-* [FT.SEARCH command](https://oss.redislabs.com/redisearch/master/Commands/#ftsearch)
-* [Query Syntax](https://oss.redislabs.com/redisearch/master/Query_Syntax)
+* [FT.SEARCH command](https://redis.io/commands/ft.search/)
+* [Query Syntax](https://redis.io/docs/stack/search/reference/query_syntax)
 
 
 Let's see how to inspect, modify and drop an index.
