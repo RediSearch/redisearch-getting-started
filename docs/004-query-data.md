@@ -131,7 +131,7 @@ The syntax to query a TAG field is  @field_name:{value}
    4) "1980"
 ```
 
-You can find more information about the Tag filters in [the documentation](https://oss.redislabs.com/redisearch/master/Query_Syntax/#tag_filters).
+You can find more information about the Tag filters in [the documentation](https://redis.io/docs/stack/search/reference/query_syntax/#tag-filters).
 
 ---
 **Example : *All `Thriller` or `Action` movies that does not have `Jedi` in the title"***
@@ -273,8 +273,8 @@ You can run the following query, and you will that the document expires after 20
 ##  More
 You have many additional features regarding indexing and searching that you can find in the documentation:
 
-* [FT.SEARCH command](https://oss.redislabs.com/redisearch/master/Commands/#ftsearch)
-* [Query Syntax](https://oss.redislabs.com/redisearch/master/Query_Syntax)
+* [FT.SEARCH command](https://redis.io/commands/ft.search)
+* [Query Syntax](https://redis.io/docs/stack/search/reference/query_syntax/)
 
 
 Let's see how to inspect, modify and drop an index.
