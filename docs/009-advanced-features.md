@@ -31,7 +31,7 @@ On `idx:drama`
 1) (integer) 24
 ```
 
-On `idx"movie`
+On `idx:movie`
 
 ```
 > FT.SEARCH idx:movie "@genre:{Drama}  @release_year:[1990 (2000]" LIMIT 0 0
