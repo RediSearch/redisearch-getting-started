@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<version.jedis>4.2.2</version.jedis>
+		<version.jedis>jedis-3.6.2</version.jedis>
 		<version.javax.inject>1</version.javax.inject>
 	</properties>
 
